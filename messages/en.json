@@ -1,0 +1,46 @@
+{
+  "Header": {
+    "delivery": "Free delivery on orders over 1000 UAH",
+    "menu": "Menu",
+    "catalog": "Catalog",
+    "searchPlaceholder": "Search products...",
+    "searchButton": "Search",
+    "login": "Sign in",
+    "compare": "Compare",
+    "favorites": "Favorites",
+    "cart": "Cart"
+  },
+  "categories": {
+    "title": "Categories",
+    "drills": "Drills",
+    "grinders": "Grinders",
+    "perforators": "Perforators",
+    "jigsaws": "Jigsaws",
+    "sanders": "Sanders",
+    "lasers": "Laser Levels",
+    "measuring": "Measuring Tools",
+    "accessories": "Accessories"
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "compare": "Compare",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "hit": "Hit",
+    "new": "New",
+    "reviews": "reviews",
+    "favorite": "Add to favorites"
+  },
+  "home": {
+    "bestSellers": "Best Sellers",
+    "viewAll": "View all",
+    "productOfDay": "Product of the Day",
+    "stockLeft": "{count} left in stock",
+    "days": "days",
+    "hours": "hrs",
+    "minutes": "min",
+    "seconds": "sec",
+    "popularBrands": "Popular Brands",
+    "officialDealer": "Official dealer of leading global brands"
+  }
+}

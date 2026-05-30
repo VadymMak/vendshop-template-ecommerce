@@ -1,0 +1,46 @@
+{
+  "Header": {
+    "delivery": "Kostenloser Versand ab 50 €",
+    "menu": "Menü",
+    "catalog": "Katalog",
+    "searchPlaceholder": "Produkte suchen...",
+    "searchButton": "Suchen",
+    "login": "Anmelden",
+    "compare": "Vergleichen",
+    "favorites": "Favoriten",
+    "cart": "Warenkorb"
+  },
+  "categories": {
+    "title": "Kategorien",
+    "drills": "Bohrmaschinen",
+    "grinders": "Winkelschleifer",
+    "perforators": "Bohrhammer",
+    "jigsaws": "Stichsägen",
+    "sanders": "Schleifmaschinen",
+    "lasers": "Laserwasserwaagen",
+    "measuring": "Messwerkzeuge",
+    "accessories": "Zubehör"
+  },
+  "product": {
+    "addToCart": "In den Warenkorb",
+    "compare": "Vergleichen",
+    "inStock": "Auf Lager",
+    "outOfStock": "Nicht auf Lager",
+    "hit": "Top",
+    "new": "Neu",
+    "reviews": "Bewertungen",
+    "favorite": "Zu Favoriten hinzufügen"
+  },
+  "home": {
+    "bestSellers": "Bestseller",
+    "viewAll": "Alle ansehen",
+    "productOfDay": "Produkt des Tages",
+    "stockLeft": "Noch {count} verfügbar",
+    "days": "Tage",
+    "hours": "Std",
+    "minutes": "Min",
+    "seconds": "Sek",
+    "popularBrands": "Beliebte Marken",
+    "officialDealer": "Offizieller Händler führender Weltmarken"
+  }
+}

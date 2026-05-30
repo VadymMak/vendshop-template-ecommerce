@@ -1,0 +1,46 @@
+{
+  "Header": {
+    "delivery": "Doprava zdarma od 50 €",
+    "menu": "Menu",
+    "catalog": "Katalog",
+    "searchPlaceholder": "Hledat produkty...",
+    "searchButton": "Hledat",
+    "login": "Přihlásit se",
+    "compare": "Porovnat",
+    "favorites": "Oblíbené",
+    "cart": "Košík"
+  },
+  "categories": {
+    "title": "Kategorie",
+    "drills": "Vrtačky",
+    "grinders": "Brusky",
+    "perforators": "Vrtací kladiva",
+    "jigsaws": "Přímočaré pily",
+    "sanders": "Brusky",
+    "lasers": "Laserové nivelační přístroje",
+    "measuring": "Měřicí nástroje",
+    "accessories": "Příslušenství"
+  },
+  "product": {
+    "addToCart": "Do košíku",
+    "compare": "Porovnat",
+    "inStock": "Skladem",
+    "outOfStock": "Není skladem",
+    "hit": "Hit",
+    "new": "Novinka",
+    "reviews": "recenzí",
+    "favorite": "Přidat k oblíbeným"
+  },
+  "home": {
+    "bestSellers": "Nejprodávanější",
+    "viewAll": "Zobrazit vše",
+    "productOfDay": "Produkt dne",
+    "stockLeft": "Zbývá {count} ks",
+    "days": "dny",
+    "hours": "hod",
+    "minutes": "min",
+    "seconds": "sek",
+    "popularBrands": "Oblíbené značky",
+    "officialDealer": "Oficiální prodejce předních světových značek"
+  }
+}

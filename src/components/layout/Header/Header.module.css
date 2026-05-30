@@ -1,0 +1,333 @@
+.header {
+  width: 100%;
+  font-family: inherit;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ── Announcement strip ───────────────────────────── */
+.announcement {
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 13px;
+}
+
+.announcementInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.announcementText,
+.phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.phone:hover {
+  color: #ffffff;
+}
+
+.announcementIcon {
+  flex-shrink: 0;
+}
+
+/* ── Main bar ──────────────────────────────────────── */
+.bar {
+  background: #ffffff;
+}
+
+.barInner {
+  max-width: 1400px;
+  height: 70px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ── Burger (hidden on desktop) ────────────────────── */
+.burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #1e293b;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.burger:hover {
+  background: #f1f5f9;
+}
+
+/* ── Logo ──────────────────────────────────────────── */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #f97316;
+  color: #ffffff;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+/* ── Catalog button ────────────────────────────────── */
+.catalog {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.catalog:hover {
+  background: #16a34a;
+}
+
+/* ── Search ────────────────────────────────────────── */
+.search {
+  display: flex;
+  flex: 1 1 50%;
+  max-width: 50%;
+  height: 44px;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 16px;
+  border: 1px solid #e5e7eb;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  font-size: 15px;
+  color: #1e293b;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: #94a3b8;
+}
+
+.searchInput:focus {
+  border-color: #cbd5e1;
+}
+
+.searchButton {
+  height: 100%;
+  padding: 0 24px;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  background: #1e293b;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.searchButton:hover {
+  background: #0f172a;
+}
+
+/* ── Action icons ──────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.action {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: #475569;
+  transition: color 0.15s ease;
+}
+
+.action:hover {
+  color: #1e293b;
+}
+
+.actionIcon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.actionLabel {
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Cart — orange highlight */
+.cart {
+  color: #f97316;
+}
+
+.cart:hover {
+  color: #ea580c;
+}
+
+/* ── Badges ────────────────────────────────────────── */
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: #64748b;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.badgeRed {
+  background: #ef4444;
+}
+
+/* ── Mobile dropdown menu ──────────────────────────── */
+.mobileMenu {
+  display: none;
+}
+
+.mobileCatalog {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mobileSearch {
+  display: flex;
+  height: 44px;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileNav a {
+  padding: 12px 4px;
+  color: #1e293b;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.mobileNav a:last-child {
+  border-bottom: none;
+}
+
+/* ── Responsive: < 768px ───────────────────────────── */
+@media (max-width: 767px) {
+  .burger {
+    display: inline-flex;
+  }
+
+  .catalog,
+  .search,
+  .actions .actionLabel {
+    display: none;
+  }
+
+  .actions {
+    gap: 16px;
+  }
+
+  /* Keep only the cart icon visible in the bar on mobile */
+  .actions .action {
+    display: none;
+  }
+
+  .actions .cart {
+    display: inline-flex;
+  }
+
+  .logoText {
+    font-size: 18px;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 24px 24px;
+    border-top: 1px solid #e5e7eb;
+    animation: slideDown 0.2s ease;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

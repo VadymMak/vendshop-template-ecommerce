@@ -1,0 +1,46 @@
+{
+  "Header": {
+    "delivery": "Бесплатная доставка от 1000 грн",
+    "menu": "Меню",
+    "catalog": "Каталог",
+    "searchPlaceholder": "Поиск товаров...",
+    "searchButton": "Найти",
+    "login": "Войти",
+    "compare": "Сравнение",
+    "favorites": "Избранное",
+    "cart": "Корзина"
+  },
+  "categories": {
+    "title": "Категории",
+    "drills": "Дрели",
+    "grinders": "Болгарки",
+    "perforators": "Перфораторы",
+    "jigsaws": "Электролобзики",
+    "sanders": "Шлифмашины",
+    "lasers": "Лазерные уровни",
+    "measuring": "Измерительные инструменты",
+    "accessories": "Принадлежности"
+  },
+  "product": {
+    "addToCart": "В корзину",
+    "compare": "Сравнить",
+    "inStock": "В наличии",
+    "outOfStock": "Нет в наличии",
+    "hit": "Хит",
+    "new": "Новинка",
+    "reviews": "отзывов",
+    "favorite": "Добавить в избранное"
+  },
+  "home": {
+    "bestSellers": "Хиты продаж",
+    "viewAll": "Смотреть все",
+    "productOfDay": "Товар дня",
+    "stockLeft": "Осталось {count} шт",
+    "days": "дн",
+    "hours": "ч",
+    "minutes": "мин",
+    "seconds": "сек",
+    "popularBrands": "Популярные бренды",
+    "officialDealer": "Официальные дилеры ведущих мировых брендов"
+  }
+}
