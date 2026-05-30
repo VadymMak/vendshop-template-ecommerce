@@ -42,5 +42,15 @@
     "seconds": "sec",
     "popularBrands": "Popular Brands",
     "officialDealer": "Official dealer of leading global brands"
+  },
+  "trust": {
+    "freeDelivery": "Free Delivery",
+    "freeDeliveryDesc": "on orders over 2000 UAH",
+    "guarantee": "Official Warranty",
+    "guaranteeDesc": "1 to 3 years",
+    "payment": "Easy Payment",
+    "paymentDesc": "card, cash, installments",
+    "returns": "14-Day Returns",
+    "returnsDesc": "no questions asked"
   }
 }

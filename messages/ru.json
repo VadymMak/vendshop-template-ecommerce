@@ -42,5 +42,15 @@
     "seconds": "сек",
     "popularBrands": "Популярные бренды",
     "officialDealer": "Официальные дилеры ведущих мировых брендов"
+  },
+  "trust": {
+    "freeDelivery": "Бесплатная доставка",
+    "freeDeliveryDesc": "от 2000 грн",
+    "guarantee": "Официальная гарантия",
+    "guaranteeDesc": "от 1 до 3 лет",
+    "payment": "Удобная оплата",
+    "paymentDesc": "карта, наличные, частями",
+    "returns": "Возврат 14 дней",
+    "returnsDesc": "без вопросов"
   }
 }

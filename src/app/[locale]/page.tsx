@@ -4,6 +4,7 @@ import CategoriesGrid from '@/components/home/CategoriesGrid/CategoriesGrid';
 import BestSellers from '@/components/home/BestSellers/BestSellers';
 import ProductOfDay from '@/components/home/ProductOfDay/ProductOfDay';
 import BrandsSection from '@/components/home/BrandsSection/BrandsSection';
+import TrustStrip from '@/components/home/TrustStrip/TrustStrip';
 import type { ProductCardProps } from '@/components/catalog/ProductCard/ProductCard';
 import styles from './page.module.css';
 
@@ -60,6 +61,9 @@ export default function HomePage() {
 
       {/* 3 — Brands */}
       <BrandsSection onBrandClick={onBrandClick} />
+
+      {/* 4 — Trust strip */}
+      <TrustStrip />
     </>
   );
 }

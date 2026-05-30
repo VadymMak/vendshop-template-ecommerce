@@ -42,5 +42,15 @@
     "seconds": "Sek",
     "popularBrands": "Beliebte Marken",
     "officialDealer": "Offizieller Händler führender Weltmarken"
+  },
+  "trust": {
+    "freeDelivery": "Kostenlose Lieferung",
+    "freeDeliveryDesc": "ab 2000 UAH",
+    "guarantee": "Offizielle Garantie",
+    "guaranteeDesc": "1 bis 3 Jahre",
+    "payment": "Bequeme Zahlung",
+    "paymentDesc": "Karte, Bar, Raten",
+    "returns": "14 Tage Rückgabe",
+    "returnsDesc": "ohne Fragen"
   }
 }

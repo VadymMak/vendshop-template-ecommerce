@@ -42,5 +42,15 @@
     "seconds": "sek",
     "popularBrands": "Oblíbené značky",
     "officialDealer": "Oficiální prodejce předních světových značek"
+  },
+  "trust": {
+    "freeDelivery": "Doprava zdarma",
+    "freeDeliveryDesc": "od 2000 UAH",
+    "guarantee": "Oficiální záruka",
+    "guaranteeDesc": "1 až 3 roky",
+    "payment": "Pohodlná platba",
+    "paymentDesc": "karta, hotovost, splátky",
+    "returns": "Vrácení 14 dní",
+    "returnsDesc": "bez otázek"
   }
 }
