@@ -67,5 +67,16 @@
     "schedule": "Mo–So: 9:00–20:00",
     "deliveryNova": "Nova Poshta Lieferung in der ganzen Ukraine",
     "allCategories": "Alle Kategorien"
+  },
+  "tags": {
+    "popularQueries": "Beliebte Suchanfragen:"
+  },
+  "subscribe": {
+    "title": "Sichere dir Rabatte als Erster!",
+    "subtitle": "Abonniere und erhalte -10% auf deine erste Bestellung",
+    "placeholder": "Gib deine E-Mail ein...",
+    "button": "Abonnieren",
+    "done": "Fertig!",
+    "note": "Gutscheincode an deine E-Mail gesendet"
   }
 }

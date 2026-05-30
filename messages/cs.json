@@ -67,5 +67,16 @@
     "schedule": "Po–Ne: 9:00–20:00",
     "deliveryNova": "Doručení Nova Poshta po celé Ukrajině",
     "allCategories": "Všechny kategorie"
+  },
+  "tags": {
+    "popularQueries": "Oblíbené dotazy:"
+  },
+  "subscribe": {
+    "title": "Získej slevy jako první!",
+    "subtitle": "Přihlas se a získej -10% na první objednávku",
+    "placeholder": "Zadej svůj email...",
+    "button": "Přihlásit se",
+    "done": "Hotovo!",
+    "note": "Promo kód byl odeslán na váš email"
   }
 }

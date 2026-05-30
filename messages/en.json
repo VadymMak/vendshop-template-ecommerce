@@ -67,5 +67,16 @@
     "schedule": "Mon–Sun: 9:00–20:00",
     "deliveryNova": "Nova Poshta delivery across Ukraine",
     "allCategories": "All categories"
+  },
+  "tags": {
+    "popularQueries": "Popular searches:"
+  },
+  "subscribe": {
+    "title": "Be the first to get discounts!",
+    "subtitle": "Subscribe and get -10% on your first order",
+    "placeholder": "Enter your email...",
+    "button": "Subscribe",
+    "done": "Done!",
+    "note": "Promo code sent to your email"
   }
 }

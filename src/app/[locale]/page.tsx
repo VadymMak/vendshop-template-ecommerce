@@ -5,6 +5,8 @@ import BestSellers from '@/components/home/BestSellers/BestSellers';
 import ProductOfDay from '@/components/home/ProductOfDay/ProductOfDay';
 import BrandsSection from '@/components/home/BrandsSection/BrandsSection';
 import TrustStrip from '@/components/home/TrustStrip/TrustStrip';
+import SubscribeBanner from '@/components/home/SubscribeBanner/SubscribeBanner';
+import PopularTags from '@/components/home/PopularTags/PopularTags';
 import type { ProductCardProps } from '@/components/catalog/ProductCard/ProductCard';
 import styles from './page.module.css';
 
@@ -64,6 +66,12 @@ export default function HomePage() {
 
       {/* 4 — Trust strip */}
       <TrustStrip />
+
+      {/* 5 — Subscribe banner */}
+      <SubscribeBanner />
+
+      {/* 6 — Popular tags */}
+      <PopularTags />
     </>
   );
 }
