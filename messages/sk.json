@@ -84,6 +84,32 @@
     "dewaltGrinder": "Uhlová brúska DeWalt DWE4157 900 W",
     "metaboJigsaw": "Priamočiara píla Metabo STEB 65 Quick 450 W",
     "milwaukeeImpact": "Rázový uťahovák Milwaukee M18 FIW2F12",
-    "boschPerforator": "Vŕtacie kladivo Bosch GBH 2-26 DRE Professional"
+    "boschPerforator": "Vŕtacie kladivo Bosch GBH 2-26 DRE Professional",
+    "makitaPerforator": "Vŕtacie kladivo Makita HR2470 780 W SDS-Plus",
+    "boschSander": "Excentrická brúska Bosch GEX 40-150",
+    "dewaltDrill": "Príklepová vŕtačka DeWalt DWD024 701 W",
+    "milwaukeeGrinder": "Uhlová brúska Milwaukee M18 FSAG125XB 125 mm"
+  },
+  "catalog": {
+    "title": "Katalóg",
+    "found": "Nájdených {count} produktov",
+    "filters": "Filtre",
+    "resetAll": "Resetovať všetko",
+    "category": "Kategória",
+    "brand": "Značka",
+    "price": "Cena",
+    "availability": "Dostupnosť",
+    "inStockOnly": "Len skladom",
+    "apply": "Použiť",
+    "sort": "Zoradenie",
+    "sortPopular": "Podľa popularity",
+    "sortPriceAsc": "Cena: vzostupne",
+    "sortPriceDesc": "Cena: zostupne",
+    "sortNew": "Novinky",
+    "pagination": "Strana {current} z {total}",
+    "prev": "Predchádzajúca",
+    "next": "Ďalšia",
+    "priceFrom": "od",
+    "priceTo": "do"
   }
 }

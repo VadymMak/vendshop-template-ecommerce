@@ -84,6 +84,32 @@
     "dewaltGrinder": "DeWalt DWE4157 900W Winkelschleifer",
     "metaboJigsaw": "Metabo STEB 65 Quick 450W Stichsäge",
     "milwaukeeImpact": "Milwaukee M18 FIW2F12 Schlagschrauber",
-    "boschPerforator": "Bosch GBH 2-26 DRE Professional Bohrhammer"
+    "boschPerforator": "Bosch GBH 2-26 DRE Professional Bohrhammer",
+    "makitaPerforator": "Makita HR2470 780W SDS-Plus Bohrhammer",
+    "boschSander": "Bosch GEX 40-150 Exzenterschleifer",
+    "dewaltDrill": "DeWalt DWD024 701W Schlagbohrmaschine",
+    "milwaukeeGrinder": "Milwaukee M18 FSAG125XB 125mm Winkelschleifer"
+  },
+  "catalog": {
+    "title": "Katalog",
+    "found": "{count} Produkte gefunden",
+    "filters": "Filter",
+    "resetAll": "Alle zurücksetzen",
+    "category": "Kategorie",
+    "brand": "Marke",
+    "price": "Preis",
+    "availability": "Verfügbarkeit",
+    "inStockOnly": "Nur verfügbar",
+    "apply": "Anwenden",
+    "sort": "Sortierung",
+    "sortPopular": "Nach Beliebtheit",
+    "sortPriceAsc": "Preis: aufsteigend",
+    "sortPriceDesc": "Preis: absteigend",
+    "sortNew": "Neuheiten",
+    "pagination": "Seite {current} von {total}",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "priceFrom": "von",
+    "priceTo": "bis"
   }
 }

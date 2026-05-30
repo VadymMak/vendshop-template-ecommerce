@@ -1,0 +1,321 @@
+/* Filter sidebar — 280px, sticky. */
+.fil {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title svg {
+  color: #f97316;
+}
+
+.reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f97316;
+  padding: 2px;
+  transition: color 150ms ease;
+}
+
+.reset:hover {
+  color: #ea6c00;
+}
+
+/* ── Groups ───────────────────────────────────────── */
+.group {
+  padding: 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.group:last-of-type {
+  border-bottom: none;
+}
+
+.groupTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 13px;
+}
+
+/* ── Checkboxes ───────────────────────────────────── */
+.chk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chk input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.chkBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #e5e7eb;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.chk:hover .chkBox {
+  border-color: #f97316;
+}
+
+.chk input:checked + .chkBox {
+  background: #f97316;
+  border-color: #f97316;
+}
+
+.chkBox svg {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.chk input:checked + .chkBox svg {
+  opacity: 1;
+}
+
+.chkLabel {
+  font-size: 14px;
+  color: #4b5563;
+  flex: 1;
+}
+
+.chkNum {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.chk input:checked ~ .chkLabel {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+/* ── Price range ──────────────────────────────────── */
+.priceInputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.priceField {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: border-color 150ms ease;
+}
+
+.priceField:focus-within {
+  border-color: #f97316;
+}
+
+.priceField span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.priceField input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: none;
+  min-width: 0;
+}
+
+.priceDash {
+  color: #9ca3af;
+}
+
+.range {
+  position: relative;
+  height: 28px;
+}
+
+.rangeTrack {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+.rangeFill {
+  position: absolute;
+  top: 11px;
+  height: 5px;
+  border-radius: 999px;
+  background: #f97316;
+}
+
+.range input[type='range'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #f97316;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 5px rgba(17, 24, 39, 0.18);
+}
+
+.range input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #f97316;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 5px rgba(17, 24, 39, 0.18);
+}
+
+.range input[type='range']::-webkit-slider-runnable-track {
+  background: none;
+}
+
+/* ── Toggle ───────────────────────────────────────── */
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggleLabel {
+  font-size: 14px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.toggleTrack {
+  width: 44px;
+  height: 25px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  transition: background 150ms ease;
+  flex-shrink: 0;
+}
+
+.toggleTrack::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 150ms ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle input:checked + .toggleTrack {
+  background: #22c55e;
+}
+
+.toggle input:checked + .toggleTrack::after {
+  transform: translateX(19px);
+}
+
+/* ── Apply ────────────────────────────────────────── */
+.apply {
+  width: 100%;
+  height: 46px;
+  margin-top: 18px;
+  background: #f97316;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    transform 80ms ease,
+    box-shadow 150ms ease;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.22);
+}
+
+.apply:hover {
+  background: #ea6c00;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+}
+
+.apply:active {
+  transform: translateY(0.5px);
+}

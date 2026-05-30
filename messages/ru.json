@@ -84,6 +84,32 @@
     "dewaltGrinder": "Угловая шлифмашина DeWalt DWE4157 900 Вт",
     "metaboJigsaw": "Электролобзик Metabo STEB 65 Quick 450 Вт",
     "milwaukeeImpact": "Гайковёрт ударный Milwaukee M18 FIW2F12",
-    "boschPerforator": "Перфоратор Bosch GBH 2-26 DRE Professional"
+    "boschPerforator": "Перфоратор Bosch GBH 2-26 DRE Professional",
+    "makitaPerforator": "Перфоратор Makita HR2470 780 Вт SDS-Plus",
+    "boschSander": "Шлифмашина эксцентриковая Bosch GEX 40-150",
+    "dewaltDrill": "Дрель ударная DeWalt DWD024 701 Вт",
+    "milwaukeeGrinder": "Болгарка Milwaukee M18 FSAG125XB 125 мм"
+  },
+  "catalog": {
+    "title": "Каталог",
+    "found": "Найдено {count} товаров",
+    "filters": "Фильтры",
+    "resetAll": "Сбросить всё",
+    "category": "Категория",
+    "brand": "Бренд",
+    "price": "Цена",
+    "availability": "Наличие",
+    "inStockOnly": "Только в наличии",
+    "apply": "Применить",
+    "sort": "Сортировка",
+    "sortPopular": "По популярности",
+    "sortPriceAsc": "Цена: по возрастанию",
+    "sortPriceDesc": "Цена: по убыванию",
+    "sortNew": "Новинки",
+    "pagination": "Страница {current} из {total}",
+    "prev": "Назад",
+    "next": "Далее",
+    "priceFrom": "от",
+    "priceTo": "до"
   }
 }

@@ -84,6 +84,32 @@
     "dewaltGrinder": "DeWalt DWE4157 900W Angle Grinder",
     "metaboJigsaw": "Metabo STEB 65 Quick 450W Jigsaw",
     "milwaukeeImpact": "Milwaukee M18 FIW2F12 Impact Wrench",
-    "boschPerforator": "Bosch GBH 2-26 DRE Professional Rotary Hammer"
+    "boschPerforator": "Bosch GBH 2-26 DRE Professional Rotary Hammer",
+    "makitaPerforator": "Makita HR2470 780W SDS-Plus Rotary Hammer",
+    "boschSander": "Bosch GEX 40-150 Random Orbital Sander",
+    "dewaltDrill": "DeWalt DWD024 701W Impact Drill",
+    "milwaukeeGrinder": "Milwaukee M18 FSAG125XB 125mm Angle Grinder"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "found": "Found {count} products",
+    "filters": "Filters",
+    "resetAll": "Reset all",
+    "category": "Category",
+    "brand": "Brand",
+    "price": "Price",
+    "availability": "Availability",
+    "inStockOnly": "In stock only",
+    "apply": "Apply",
+    "sort": "Sort",
+    "sortPopular": "By popularity",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortNew": "New arrivals",
+    "pagination": "Page {current} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "priceFrom": "from",
+    "priceTo": "to"
   }
 }
