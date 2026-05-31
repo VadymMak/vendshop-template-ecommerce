@@ -1,25 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import CartItem, { type CartItemData } from '@/components/cart/CartItem/CartItem';
+import { useCartStore } from '@/stores/useCartStore';
+import CartItem from '@/components/cart/CartItem/CartItem';
 import OrderSummary from '@/components/cart/OrderSummary/OrderSummary';
 import styles from './CartPage.module.css';
-
-const CURRENCY = 'грн';
-
-// Sample cart state. `nameKey` resolves against the `sampleProducts` namespace
-// so item names follow the active locale (no hardcoded strings).
-interface CartSeed extends Omit<CartItemData, 'name' | 'currency'> {
-  nameKey: string;
-}
-
-const INITIAL_ITEMS: CartSeed[] = [
-  { id: 'a', slug: 'makita-df333dsae', brand: 'MAKITA', nameKey: 'makitaDrill', image: '/placeholder-product.svg', sku: 'DF333DSAE', price: 2990, oldPrice: 3499, quantity: 1, checked: true },
-  { id: 'b', slug: 'bosch-gbh-2-26', brand: 'BOSCH', nameKey: 'boschPerforator', image: '/placeholder-product.svg', sku: 'GBH226DRE', price: 5749, quantity: 1, checked: true },
-  { id: 'c', slug: 'dewalt-dwe4157', brand: 'DEWALT', nameKey: 'dewaltGrinder', image: '/placeholder-product.svg', sku: 'DWE4157', price: 3199, oldPrice: 4099, quantity: 1, checked: true },
-];
 
 const stroke = {
   fill: 'none',
@@ -46,14 +33,6 @@ function TrashIcon() {
   );
 }
 
-function ArrowLeft() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" {...stroke} aria-hidden="true">
-      <path d="M19 12H5M11 6l-6 6 6 6" />
-    </svg>
-  );
-}
-
 function BigCartIcon() {
   return (
     <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -66,23 +45,48 @@ function BigCartIcon() {
 
 export default function CartPage() {
   const t = useTranslations('cart');
-  const tn = useTranslations('sampleProducts');
 
-  const [items, setItems] = useState<CartSeed[]>(INITIAL_ITEMS);
+  const items = useCartStore((s) => s.items);
+  const removeItem = useCartStore((s) => s.removeItem);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
 
-  const handleQuantityChange = (id: string, quantity: number) =>
-    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, quantity } : it)));
-  const handleCheck = (id: string) =>
-    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, checked: !it.checked } : it)));
-  const handleDelete = (id: string) => setItems((prev) => prev.filter((it) => it.id !== id));
+  // Local selection state (the store has no per-item "checked" flag). New items
+  // default to checked; removed ids fall out naturally.
+  const [unchecked, setUnchecked] = useState<Set<string>>(new Set());
 
-  const selectedCount = items.filter((it) => it.checked).length;
-  const allChecked = items.length > 0 && items.every((it) => it.checked);
-  const handleToggleAll = () =>
-    setItems((prev) => prev.map((it) => ({ ...it, checked: !allChecked })));
-  const handleDeleteSelected = () => setItems((prev) => prev.filter((it) => !it.checked));
+  // Hydrate the persisted cart after mount (store uses skipHydration).
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+    setHydrated(true);
+  }, []);
 
-  const checkedItems = items.filter((it) => it.checked);
+  const isChecked = (id: string) => !unchecked.has(id);
+  const toggleCheck = (id: string) =>
+    setUnchecked((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  const selectedCount = items.filter((it) => isChecked(it.id)).length;
+  const allChecked = items.length > 0 && selectedCount === items.length;
+  const toggleAll = () =>
+    setUnchecked(allChecked ? new Set(items.map((it) => it.id)) : new Set());
+  const deleteSelected = () => items.filter((it) => isChecked(it.id)).forEach((it) => removeItem(it.id));
+
+  const checkedItems = items.filter((it) => isChecked(it.id));
+
+  // Before hydration the store is empty; render nothing to avoid flashing the
+  // empty state for a user who actually has items.
+  if (!hydrated) {
+    return (
+      <div className={styles.cart}>
+        <h1 className={styles.h1}>{t('title')}</h1>
+      </div>
+    );
+  }
 
   // Empty state
   if (items.length === 0) {
@@ -115,7 +119,7 @@ export default function CartPage() {
             <div className={styles.head}>
               <label className={styles.selectAll}>
                 <span className={styles.chk}>
-                  <input type="checkbox" checked={allChecked} onChange={handleToggleAll} />
+                  <input type="checkbox" checked={allChecked} onChange={toggleAll} />
                   <span className={styles.chkBox}>
                     <CheckMini />
                   </span>
@@ -125,7 +129,7 @@ export default function CartPage() {
               <button
                 type="button"
                 className={styles.clear}
-                onClick={handleDeleteSelected}
+                onClick={deleteSelected}
                 disabled={selectedCount === 0}
               >
                 <TrashIcon />
@@ -136,23 +140,22 @@ export default function CartPage() {
             {items.map((it) => (
               <CartItem
                 key={it.id}
-                item={{ ...it, name: tn(it.nameKey), currency: CURRENCY }}
-                onQuantityChange={handleQuantityChange}
-                onDelete={handleDelete}
-                onCheck={handleCheck}
+                item={{ ...it, checked: isChecked(it.id) }}
+                onQuantityChange={updateQuantity}
+                onDelete={removeItem}
+                onCheck={toggleCheck}
               />
             ))}
           </div>
 
           <div className={styles.foot}>
             <Link href="/catalog" className={styles.back}>
-              <ArrowLeft />
               {t('continueShopping')}
             </Link>
           </div>
         </div>
 
-        <OrderSummary items={checkedItems} currency={CURRENCY} />
+        <OrderSummary items={checkedItems} currency={checkedItems[0]?.currency ?? 'грн'} />
       </div>
     </div>
   );

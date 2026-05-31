@@ -11,8 +11,7 @@ interface HeaderProps {
   storeName?: string;
   /** Contact phone number shown in the announcement strip. */
   phone?: string;
-  /** Counters rendered as badges on the action icons. */
-  cartCount?: number;
+  /** Counters rendered as badges on the favorites/compare icons. Cart uses the live store. */
   favoritesCount?: number;
   compareCount?: number;
 }
@@ -20,7 +19,6 @@ interface HeaderProps {
 export default function Header({
   storeName = 'ElectroMarket',
   phone = '+38 (097) 123-45-67',
-  cartCount = 3,
   favoritesCount = 0,
   compareCount = 0,
 }: HeaderProps) {
@@ -249,7 +247,7 @@ export default function Header({
                   <circle cx="20" cy="21" r="1" />
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
-                <CartBadge count={cartCount} />
+                <CartBadge />
               </span>
               <span className={styles.actionLabel}>{t('cart')}</span>
             </Link>

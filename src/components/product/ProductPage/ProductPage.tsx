@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useCartStore } from '@/stores/useCartStore';
 import ImageGallery from '@/components/product/ImageGallery/ImageGallery';
 import ProductTabs, {
   type ProductTab,
@@ -123,17 +124,38 @@ function StoreIcon() {
   );
 }
 
-// Placeholder handlers — swap for real cart/compare/wishlist later.
-const logAddToCart = (payload: { id: string; quantity: number }) => console.log('[addToCart]', payload);
+// Placeholder handlers — swap for real compare/wishlist/checkout later.
 const logBuyOneClick = (payload: { id: string }) => console.log('[buyOneClick]', payload);
 const logFavorite = (payload: { id: string }) => console.log('[favorite]', payload);
 const logCompare = (payload: { id: string }) => console.log('[compare]', payload);
 
 export default function ProductPage({ product }: ProductPageProps) {
   const t = useTranslations('product');
+  const addItem = useCartStore((s) => s.addItem);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
+  const inCart = useCartStore((s) => s.items.some((i) => i.id === product.id));
 
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<ProductTab>('specs');
+
+  const handleAddToCart = () => {
+    addItem({
+      id: product.id,
+      slug: product.slug,
+      brand: product.brand,
+      name: product.name,
+      image: product.images[0] ?? '/placeholder-product.svg',
+      price: product.price,
+      oldPrice: product.oldPrice,
+      currency: product.currency,
+    });
+    // addItem adds 1; reconcile to the selected quantity.
+    if (quantity !== 1) {
+      const current =
+        useCartStore.getState().items.find((i) => i.id === product.id)?.quantity ?? 1;
+      updateQuantity(product.id, current - 1 + quantity);
+    }
+  };
 
   // Explicit locale keeps SSR and client numbers identical (no hydration mismatch).
   const formatPrice = (value: number) => new Intl.NumberFormat('uk-UA').format(value);
@@ -232,12 +254,12 @@ export default function ProductPage({ product }: ProductPageProps) {
 
             <button
               type="button"
-              className={styles.addCart}
+              className={`${styles.addCart} ${inCart ? styles.addCartInCart : ''}`}
               disabled={!product.inStock}
-              onClick={() => logAddToCart({ id: product.id, quantity })}
+              onClick={handleAddToCart}
             >
               <CartPlusIcon />
-              {t('addToCart')}
+              {inCart ? t('inCart') : t('addToCart')}
             </button>
           </div>
 

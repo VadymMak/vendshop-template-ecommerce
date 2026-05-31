@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useCartStore } from '@/stores/useCartStore';
 import styles from './OrderSuccess.module.css';
 
 // Confetti pieces — fixed positions/colours so render is deterministic; only the
@@ -24,9 +25,13 @@ export default function OrderSuccess() {
   // Generated client-side after mount so SSR and client markup match (no
   // hydration mismatch from Math.random()).
   const [orderNo, setOrderNo] = useState<string | null>(null);
+  const clearCart = useCartStore((s) => s.clearCart);
   useEffect(() => {
     setOrderNo(String(Math.floor(100000 + Math.random() * 900000)));
-  }, []);
+    // The order is placed — empty the cart (also clears persisted storage).
+    useCartStore.persist.rehydrate();
+    clearCart();
+  }, [clearCart]);
 
   return (
     <div className={styles.wrap}>

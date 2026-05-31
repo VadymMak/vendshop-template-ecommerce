@@ -10,7 +10,7 @@ export interface CartItemData {
   brand: string;
   name: string;
   image: string;
-  sku: string;
+  sku?: string;
   price: number;
   oldPrice?: number;
   currency: string;
@@ -93,9 +93,11 @@ export default function CartItem({ item, onQuantityChange, onDelete, onCheck }: 
         <h3 className={styles.name}>
           <Link href={href}>{item.name}</Link>
         </h3>
-        <span className={styles.sku}>
-          {tp('sku')}: {item.sku}
-        </span>
+        {item.sku && (
+          <span className={styles.sku}>
+            {tp('sku')}: {item.sku}
+          </span>
+        )}
       </div>
 
       <div className={styles.ctrl}>

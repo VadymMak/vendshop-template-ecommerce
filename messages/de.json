@@ -44,7 +44,9 @@
     "tabSpecs": "Spezifikationen",
     "tabDescription": "Beschreibung",
     "tabReviews": "Bewertungen",
-    "quantity": "Menge"
+    "quantity": "Menge",
+    "inCart": "Im Warenkorb",
+    "genericDescription": "{name} ist ein professionelles Werkzeug von einem offiziellen Händler. Originalqualität, Garantie und Service-Support. Vollständige technische Details finden Sie im Tab „Spezifikationen“."
   },
   "home": {
     "bestSellers": "Bestseller",

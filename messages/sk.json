@@ -44,7 +44,9 @@
     "tabSpecs": "Špecifikácie",
     "tabDescription": "Popis",
     "tabReviews": "Recenzie",
-    "quantity": "Množstvo"
+    "quantity": "Množstvo",
+    "inCart": "V košíku",
+    "genericDescription": "{name} je profesionálny nástroj od oficiálneho predajcu. Originálna kvalita, záruka a servisná podpora. Podrobné technické údaje nájdete na karte „Špecifikácie“."
   },
   "home": {
     "bestSellers": "Najpredávanejšie",

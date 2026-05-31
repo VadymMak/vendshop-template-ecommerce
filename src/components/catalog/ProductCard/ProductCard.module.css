@@ -298,6 +298,17 @@
   transform: translateY(0.5px);
 }
 
+/* In-cart state — green. */
+.cartInCart {
+  background: #22c55e;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.22);
+}
+
+.cartInCart:hover {
+  background: #16a34a;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+}
+
 .cart:disabled {
   background: #e5e7eb;
   color: #9ca3af;

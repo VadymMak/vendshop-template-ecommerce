@@ -3,6 +3,7 @@
 import { useState, type CSSProperties } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useCartStore } from '@/stores/useCartStore';
 import styles from './ProductCard.module.css';
 
 export interface ProductCardProps {
@@ -123,6 +124,9 @@ export default function ProductCard({
   onFavorite,
 }: ProductCardProps) {
   const t = useTranslations('product');
+  const addItem = useCartStore((s) => s.addItem);
+  // Subscribe to items (not isInCart) so the in-cart state updates reactively.
+  const inCart = useCartStore((s) => s.items.some((i) => i.id === id));
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFavorite = () => {
@@ -199,12 +203,15 @@ export default function ProductCard({
       <div className={styles.foot}>
         <button
           type="button"
-          className={styles.cart}
-          onClick={() => onAddToCart(id)}
+          className={`${styles.cart} ${inCart ? styles.cartInCart : ''}`}
+          onClick={() => {
+            addItem({ id, slug, brand, name, image, price, oldPrice, currency });
+            onAddToCart(id);
+          }}
           disabled={!inStock}
         >
           <CartPlusIcon />
-          {t('addToCart')}
+          {inCart ? t('inCart') : t('addToCart')}
         </button>
 
         <button type="button" className={styles.compare} onClick={() => onCompare(id)}>

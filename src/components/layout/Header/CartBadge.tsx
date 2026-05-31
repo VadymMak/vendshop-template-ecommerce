@@ -1,14 +1,23 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useCartStore } from '@/stores/useCartStore';
 import styles from './Header.module.css';
 
-export interface CartBadgeProps {
-  /** Number of items in the cart. The badge is hidden when this is 0. */
-  count?: number;
-}
+// Reads the live cart count from the Zustand store. Hydrated after mount
+// (store uses skipHydration) so SSR and first client render match.
+export default function CartBadge() {
+  const [count, setCount] = useState(0);
 
-// Standalone so it can later read from a cart context/store without touching Header.
-export default function CartBadge({ count = 0 }: CartBadgeProps) {
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+    setCount(useCartStore.getState().getTotalItems());
+    const unsubscribe = useCartStore.subscribe((state) =>
+      setCount(state.getTotalItems()),
+    );
+    return unsubscribe;
+  }, []);
+
   if (count === 0) return null;
   return <span className={`${styles.badge} ${styles.badgeRed}`}>{count}</span>;
 }

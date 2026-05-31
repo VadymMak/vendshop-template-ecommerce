@@ -44,7 +44,9 @@
     "tabSpecs": "Specifications",
     "tabDescription": "Description",
     "tabReviews": "Reviews",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "inCart": "In cart",
+    "genericDescription": "{name} is a professional tool from an official dealer. Original quality, warranty, and service support. See the Specifications tab for full technical details."
   },
   "home": {
     "bestSellers": "Best Sellers",
