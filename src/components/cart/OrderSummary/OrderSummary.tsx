@@ -52,14 +52,18 @@ export default function OrderSummary({ items, currency }: OrderSummaryProps) {
   const locale = useLocale();
 
   const { subtotal, discount, deliveryFee, deliveryFree, total } = useMemo(() => {
-    const sub = items.reduce((s, it) => s + it.price * it.quantity, 0);
+    // subtotal = list-price total (oldPrice where present, else the price itself).
+    const sub = items.reduce((s, it) => s + (it.oldPrice ?? it.price) * it.quantity, 0);
+    // discount = total savings vs. list price.
     const disc = items.reduce(
       (s, it) => s + (it.oldPrice != null ? (it.oldPrice - it.price) * it.quantity : 0),
       0,
     );
-    const free = sub === 0 || sub > FREE_DELIVERY_THRESHOLD;
+    // Free delivery is decided on the payable amount (subtotal − discount).
+    const payable = sub - disc;
+    const free = payable === 0 || payable > FREE_DELIVERY_THRESHOLD;
     const fee = free ? 0 : DELIVERY_FEE;
-    return { subtotal: sub, discount: disc, deliveryFee: fee, deliveryFree: free, total: sub - disc + fee };
+    return { subtotal: sub, discount: disc, deliveryFee: fee, deliveryFree: free, total: payable + fee };
   }, [items]);
 
   const formatPrice = (value: number) => new Intl.NumberFormat('uk-UA').format(value);

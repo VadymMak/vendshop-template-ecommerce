@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
+import CartBadge from './CartBadge';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -167,7 +168,7 @@ export default function Header({
 
           {/* Action icons */}
           <nav className={styles.actions} aria-label={t('menu')}>
-            <a className={styles.action} href="/login">
+            <Link className={styles.action} href={`/${locale}/login`}>
               <span className={styles.actionIcon}>
                 <svg
                   width="24"
@@ -185,9 +186,9 @@ export default function Header({
                 </svg>
               </span>
               <span className={styles.actionLabel}>{t('login')}</span>
-            </a>
+            </Link>
 
-            <a className={styles.action} href="/compare">
+            <Link className={styles.action} href={`/${locale}/compare`}>
               <span className={styles.actionIcon}>
                 <svg
                   width="24"
@@ -208,9 +209,9 @@ export default function Header({
                 )}
               </span>
               <span className={styles.actionLabel}>{t('compare')}</span>
-            </a>
+            </Link>
 
-            <a className={styles.action} href="/favorites">
+            <Link className={styles.action} href={`/${locale}/favorites`}>
               <span className={styles.actionIcon}>
                 <svg
                   width="24"
@@ -230,9 +231,9 @@ export default function Header({
                 )}
               </span>
               <span className={styles.actionLabel}>{t('favorites')}</span>
-            </a>
+            </Link>
 
-            <a className={`${styles.action} ${styles.cart}`} href="/cart">
+            <Link className={`${styles.action} ${styles.cart}`} href={`/${locale}/cart`}>
               <span className={styles.actionIcon}>
                 <svg
                   width="24"
@@ -249,14 +250,10 @@ export default function Header({
                   <circle cx="20" cy="21" r="1" />
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
-                {cartCount > 0 && (
-                  <span className={`${styles.badge} ${styles.badgeRed}`}>
-                    {cartCount}
-                  </span>
-                )}
+                <CartBadge count={cartCount} />
               </span>
               <span className={styles.actionLabel}>{t('cart')}</span>
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
@@ -301,10 +298,18 @@ export default function Header({
           </form>
 
           <nav className={styles.mobileNav}>
-            <a href="/login">{t('login')}</a>
-            <a href="/compare">{t('compare')}</a>
-            <a href="/favorites">{t('favorites')}</a>
-            <a href="/cart">{t('cart')}</a>
+            <Link href={`/${locale}/login`} onClick={() => setIsMenuOpen(false)}>
+              {t('login')}
+            </Link>
+            <Link href={`/${locale}/compare`} onClick={() => setIsMenuOpen(false)}>
+              {t('compare')}
+            </Link>
+            <Link href={`/${locale}/favorites`} onClick={() => setIsMenuOpen(false)}>
+              {t('favorites')}
+            </Link>
+            <Link href={`/${locale}/cart`} onClick={() => setIsMenuOpen(false)}>
+              {t('cart')}
+            </Link>
           </nav>
         </div>
       )}
