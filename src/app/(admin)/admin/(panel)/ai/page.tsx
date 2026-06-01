@@ -14,30 +14,31 @@ interface ChatMessage {
 
 type Tone = 'friendly' | 'formal' | 'neutral';
 const TONES: { value: Tone; label: string }[] = [
-  { value: 'friendly', label: 'Дружній' },
-  { value: 'formal',   label: 'Формальний' },
-  { value: 'neutral',  label: 'Нейтральний' },
+  { value: 'friendly', label: 'Friendly' },
+  { value: 'formal',   label: 'Formal' },
+  { value: 'neutral',  label: 'Neutral' },
 ];
 
 interface PriorityCategory { id: string; label: string; featured: boolean }
 const INITIAL_CATEGORIES: PriorityCategory[] = [
-  { id: 'drills',      label: 'Дрелі та шурупокрути', featured: true },
-  { id: 'perforators', label: 'Перфоратори',          featured: true },
-  { id: 'grinders',    label: 'Болгарки',              featured: false },
-  { id: 'jigsaws',     label: 'Лобзики',               featured: false },
-  { id: 'sanders',     label: 'Шліфмашини',            featured: false },
+  { id: 'drills',      label: 'Drills & Screwdrivers', featured: true },
+  { id: 'perforators', label: 'Perforators',            featured: true },
+  { id: 'grinders',    label: 'Grinders',               featured: false },
+  { id: 'jigsaws',     label: 'Jigsaws',                featured: false },
+  { id: 'sanders',     label: 'Sanders',                featured: false },
 ];
 
 const SUGGESTIONS = [
-  'Аналітика за місяць',
-  'Заказы за неделю',
-  'Top customers by revenue',
   'Analytics this month',
-  'Покажи клієнтів',
+  'Orders this week',
+  'Top customers by revenue',
+  'Show products in stock',
   'How many orders?',
+  'Create a discount promo',
 ];
 
 const TOOLS_COUNT = 8;
+const TOTAL_PRODUCTS = 35;
 
 // ─── Icons ─────────────────────────────────────────────────────────────────
 const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.75, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -60,6 +61,9 @@ function WarnIcon() {
 function DragIcon() {
   return <svg width="16" height="16" viewBox="0 0 24 24" {...stroke} aria-hidden="true"><path d="M8 6h.01M8 12h.01M8 18h.01M16 6h.01M16 12h.01M16 18h.01" /></svg>;
 }
+function GearIcon() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" {...stroke} aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" /></svg>;
+}
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -81,20 +85,19 @@ export default function AdminAiPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // API history (Claude format, without display extras)
+  // API history (simple text format for both providers)
   const apiHistoryRef = useRef<{ role: 'user' | 'assistant'; content: string }[]>([]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, loading]);
+  }, [messages]);
 
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || loading) return;
 
     setInput('');
-    const userMsg: ChatMessage = { role: 'user', content: trimmed, timestamp: Date.now() };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev, { role: 'user', content: trimmed, timestamp: Date.now() }]);
     setLoading(true);
 
     try {
@@ -111,14 +114,13 @@ export default function AdminAiPage() {
           : (errData.error ?? `AI request failed (HTTP ${res.status})`);
         throw new Error(errMsg);
       }
+
       const data = (await res.json()) as {
         response: string;
         toolsUsed: string[];
         provider: 'openai' | 'anthropic';
-        updatedHistory: { role: 'user' | 'assistant'; content: string }[];
       };
 
-      // Update API history (text-only) for next turn
       apiHistoryRef.current = [
         ...apiHistoryRef.current,
         { role: 'user', content: trimmed },
@@ -130,7 +132,7 @@ export default function AdminAiPage() {
         { role: 'assistant', content: data.response, toolsUsed: data.toolsUsed, provider: data.provider, timestamp: Date.now() },
       ]);
       setProvider(data.provider);
-      setLastUsed(new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' }));
+      setLastUsed(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
     } catch (err) {
       console.error('[admin chat]', err);
       const errText = err instanceof Error ? err.message : 'AI connection error. Try again.';
@@ -150,12 +152,16 @@ export default function AdminAiPage() {
     }
   };
 
-  // ── Indexing section state ────────────────────────────────────────────────
-  const TOTAL = 35; // real product count from DB
+  // ── Settings modal state ──────────────────────────────────────────────────
+  const [showSettings, setShowSettings] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<'status' | 'settings'>('status');
+
+  // ── Indexing state ────────────────────────────────────────────────────────
   const [indexing, setIndexing] = useState(false);
-  const [progress, setProgress] = useState(TOTAL);
+  const [progress, setProgress] = useState(TOTAL_PRODUCTS);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
+
   const reindex = () => {
     if (indexing) return;
     setIndexing(true); setProgress(0);
@@ -163,11 +169,11 @@ export default function AdminAiPage() {
     intervalRef.current = setInterval(() => {
       step += 1;
       if (step === 1) setProgress(17);
-      else if (step === 2) setProgress(TOTAL);
+      else if (step === 2) setProgress(TOTAL_PRODUCTS);
       else {
         if (intervalRef.current) clearInterval(intervalRef.current);
         intervalRef.current = null;
-        setIndexing(false); setProgress(TOTAL);
+        setIndexing(false); setProgress(TOTAL_PRODUCTS);
       }
     }, 1000);
   };
@@ -175,8 +181,8 @@ export default function AdminAiPage() {
   // ── Settings state ────────────────────────────────────────────────────────
   const [aiActive, setAiActive] = useState(true);
   const [tone, setTone] = useState<Tone>('friendly');
-  const [assistantName, setAssistantName] = useState('Олексій');
-  const [greeting, setGreeting] = useState('Привіт! Я ваш помічник з вибору інструментів. Чим можу допомогти?');
+  const [assistantName, setAssistantName] = useState('Alex');
+  const [greeting, setGreeting] = useState('Hello! I can help you manage your store. Ask me anything.');
   const [categories, setCategories] = useState<PriorityCategory[]>(INITIAL_CATEGORIES);
   const [recommendPromos, setRecommendPromos] = useState(true);
   const [showProductOfDay, setShowProductOfDay] = useState(true);
@@ -184,26 +190,35 @@ export default function AdminAiPage() {
   const toggleFeatured = (id: string) =>
     setCategories((prev) => prev.map((c) => (c.id === id ? { ...c, featured: !c.featured } : c)));
 
-  const pct = indexing ? Math.round((progress / TOTAL) * 100) : 100;
+  const pct = indexing ? Math.round((progress / TOTAL_PRODUCTS) * 100) : 100;
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.h1}>AI керування</h1>
+      <h1 className={styles.h1}>AI Management</h1>
 
       {/* ── Status bar ─────────────────────────────────────────────────────── */}
       <div className={styles.statusBar}>
-        <span className={styles.statusChip}><BotIcon /> {TOOLS_COUNT} tools доступно</span>
-        {lastUsed && <span className={styles.statusChipGray}>Остання відповідь: {lastUsed}</span>}
+        <span className={styles.statusChip}><BotIcon /> {TOOLS_COUNT} tools available</span>
+        {lastUsed && <span className={styles.statusChipGray}>Last response: {lastUsed}</span>}
         <span className={`${styles.statusChipGray} ${styles.statusChipRight}`}>
-          {provider === 'openai' ? 'OpenAI GPT-4o-mini' : provider === 'anthropic' ? 'Claude Haiku' : 'AI готовий'}
+          {provider === 'openai' ? 'OpenAI GPT-4o-mini' : provider === 'anthropic' ? 'Claude Haiku' : 'AI ready'}
         </span>
       </div>
 
       {/* ── Admin Chat ─────────────────────────────────────────────────────── */}
       <section className={styles.chatCard}>
+        {/* Header */}
         <div className={styles.chatHeader}>
           <BotIcon />
           <h2 className={styles.chatTitle}>Store AI Assistant</h2>
+          <button
+            type="button"
+            className={styles.gearBtn}
+            onClick={() => setShowSettings(true)}
+            aria-label="Settings"
+          >
+            <GearIcon />
+          </button>
           {messages.length > 0 && (
             <button
               type="button"
@@ -215,7 +230,7 @@ export default function AdminAiPage() {
           )}
         </div>
 
-        {/* Messages */}
+        {/* Messages — scrollable area */}
         <div className={styles.chatMessages}>
           {messages.length === 0 && !loading && (
             <div className={styles.chatEmpty}>
@@ -253,7 +268,7 @@ export default function AdminAiPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
+        {/* Input — always visible at bottom */}
         <div className={styles.chatInputArea}>
           <textarea
             ref={textareaRef}
@@ -276,7 +291,7 @@ export default function AdminAiPage() {
           </button>
         </div>
 
-        {/* Suggestions — below input, shown only on empty chat */}
+        {/* Suggestions — below input, only on empty chat */}
         {messages.length === 0 && (
           <div className={styles.chatSuggestions}>
             {SUGGESTIONS.map((s) => (
@@ -288,79 +303,113 @@ export default function AdminAiPage() {
         )}
       </section>
 
-      {/* ── Indexing status ───────────────────────────────────────────────── */}
-      <section className={styles.card} style={{ marginTop: 28 }}>
-        <h2 className={styles.cardTitle}>Статус індексації</h2>
-        <div className={styles.statusRow}>
-          <span className={`${styles.statusDot} ${indexing ? styles.dotWarn : styles.dotOk}`}>
-            {indexing ? <WarnIcon /> : <CheckIcon />}
-          </span>
-          <span className={styles.statusText}>{indexing ? 'Індексація…' : 'AI актуальний'}</span>
-        </div>
-        <div className={styles.stats}>
-          <span>Проіндексовано: <b>{indexing ? progress : TOTAL} з {TOTAL} товарів</b></span>
-          <span>Остання зміна: <b>сьогодні</b></span>
-        </div>
-        <div className={styles.progress}>
-          <span className={styles.progressFill} style={{ width: `${pct}%` }} />
-        </div>
-        <button type="button" className={styles.reindexBtn} onClick={reindex} disabled={indexing}>
-          <RefreshIcon spin={indexing} />
-          {indexing ? `Індексація ${progress}/${TOTAL}…` : 'Оновити AI знання'}
-        </button>
-        <p className={styles.hint}>Автоматичне оновлення при зміні товарів</p>
-      </section>
+      {/* ── Settings Modal ────────────────────────────────────────────────── */}
+      {showSettings && (
+        <div className={styles.overlay} onClick={(e) => { if (e.target === e.currentTarget) setShowSettings(false); }}>
+          <div className={styles.modal}>
+            {/* Modal header */}
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>AI Settings</h3>
+              <button type="button" className={styles.modalClose} onClick={() => setShowSettings(false)}>×</button>
+            </div>
 
-      {/* ── Chat settings ────────────────────────────────────────────────── */}
-      <h2 className={styles.sectionTitle}>Налаштування чату</h2>
-      <div className={styles.twoCol}>
-        <div className={styles.card}>
-          <h3 className={styles.subTitle}>Поведінка AI</h3>
-          <div className={styles.settingRow}>
-            <span>Активний на сайті</span>
-            <Toggle checked={aiActive} onChange={setAiActive} />
-          </div>
-          <label className={styles.field}>
-            <span className={styles.label}>Тональність</span>
-            <select className={styles.input} value={tone} onChange={(e) => setTone(e.target.value as Tone)}>
-              {TONES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-            </select>
-          </label>
-          <label className={styles.field}>
-            <span className={styles.label}>Ім&apos;я асистента</span>
-            <input className={styles.input} type="text" value={assistantName} onChange={(e) => setAssistantName(e.target.value)} />
-          </label>
-          <label className={styles.field}>
-            <span className={styles.label}>Вітальне повідомлення</span>
-            <textarea className={styles.textarea} rows={3} value={greeting} onChange={(e) => setGreeting(e.target.value)} />
-          </label>
-          <button type="button" className={styles.saveBtn}
-            onClick={() => console.log('[ai settings]', { aiActive, tone, assistantName, greeting })}>
-            Зберегти налаштування
-          </button>
-        </div>
+            {/* Tabs */}
+            <div className={styles.modalTabs}>
+              <button
+                type="button"
+                className={`${styles.modalTab} ${settingsTab === 'status' ? styles.modalTabActive : ''}`}
+                onClick={() => setSettingsTab('status')}
+              >
+                Status
+              </button>
+              <button
+                type="button"
+                className={`${styles.modalTab} ${settingsTab === 'settings' ? styles.modalTabActive : ''}`}
+                onClick={() => setSettingsTab('settings')}
+              >
+                Settings
+              </button>
+            </div>
 
-        <div className={styles.card}>
-          <h3 className={styles.subTitle}>Пріоритет рекомендацій</h3>
-          <ul className={styles.priorityList}>
-            {categories.map((c) => (
-              <li key={c.id} className={styles.priorityItem}>
-                <span className={styles.dragHandle} aria-hidden="true"><DragIcon /></span>
-                <span className={styles.priorityLabel}>{c.label}</span>
-                <Toggle checked={c.featured} onChange={() => toggleFeatured(c.id)} />
-              </li>
-            ))}
-          </ul>
-          <div className={styles.settingRow}>
-            <span>Рекомендувати акційні товари</span>
-            <Toggle checked={recommendPromos} onChange={setRecommendPromos} />
-          </div>
-          <div className={styles.settingRow}>
-            <span>Показувати товар дня в чаті</span>
-            <Toggle checked={showProductOfDay} onChange={setShowProductOfDay} />
+            {/* Tab body */}
+            <div className={styles.modalBody}>
+              {settingsTab === 'status' && (
+                <>
+                  <div className={styles.statusRow}>
+                    <span className={`${styles.statusDot} ${indexing ? styles.dotWarn : styles.dotOk}`}>
+                      {indexing ? <WarnIcon /> : <CheckIcon />}
+                    </span>
+                    <span className={styles.statusText}>{indexing ? 'Indexing…' : 'AI up to date'}</span>
+                  </div>
+                  <div className={styles.stats}>
+                    <span>Indexed: <b>{indexing ? progress : TOTAL_PRODUCTS} of {TOTAL_PRODUCTS} products</b></span>
+                    <span>Last updated: <b>today</b></span>
+                  </div>
+                  <div className={styles.progress}>
+                    <span className={styles.progressFill} style={{ width: `${pct}%` }} />
+                  </div>
+                  <button type="button" className={styles.reindexBtn} onClick={reindex} disabled={indexing}>
+                    <RefreshIcon spin={indexing} />
+                    {indexing ? `Indexing ${progress}/${TOTAL_PRODUCTS}…` : 'Update AI knowledge'}
+                  </button>
+                  <p className={styles.hint}>Auto-updates when products change</p>
+                </>
+              )}
+
+              {settingsTab === 'settings' && (
+                <div className={styles.twoCol}>
+                  <div>
+                    <h4 className={styles.subTitle}>AI Behavior</h4>
+                    <div className={styles.settingRow}>
+                      <span>Active on site</span>
+                      <Toggle checked={aiActive} onChange={setAiActive} />
+                    </div>
+                    <label className={styles.field}>
+                      <span className={styles.label}>Tone</span>
+                      <select className={styles.input} value={tone} onChange={(e) => setTone(e.target.value as Tone)}>
+                        {TONES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+                      </select>
+                    </label>
+                    <label className={styles.field}>
+                      <span className={styles.label}>Assistant name</span>
+                      <input className={styles.input} type="text" value={assistantName} onChange={(e) => setAssistantName(e.target.value)} />
+                    </label>
+                    <label className={styles.field}>
+                      <span className={styles.label}>Greeting message</span>
+                      <textarea className={styles.textarea} rows={3} value={greeting} onChange={(e) => setGreeting(e.target.value)} />
+                    </label>
+                    <button type="button" className={styles.saveBtn}
+                      onClick={() => console.log('[ai settings]', { aiActive, tone, assistantName, greeting })}>
+                      Save settings
+                    </button>
+                  </div>
+
+                  <div>
+                    <h4 className={styles.subTitle}>Recommendation priority</h4>
+                    <ul className={styles.priorityList}>
+                      {categories.map((c) => (
+                        <li key={c.id} className={styles.priorityItem}>
+                          <span className={styles.dragHandle} aria-hidden="true"><DragIcon /></span>
+                          <span className={styles.priorityLabel}>{c.label}</span>
+                          <Toggle checked={c.featured} onChange={() => toggleFeatured(c.id)} />
+                        </li>
+                      ))}
+                    </ul>
+                    <div className={styles.settingRow}>
+                      <span>Recommend sale items</span>
+                      <Toggle checked={recommendPromos} onChange={setRecommendPromos} />
+                    </div>
+                    <div className={styles.settingRow}>
+                      <span>Show product of the day</span>
+                      <Toggle checked={showProductOfDay} onChange={setShowProductOfDay} />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
