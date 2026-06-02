@@ -5,8 +5,8 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing, type Locale } from '@/i18n/routing';
 import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
-import { db } from '@/lib/db';
-import { DEFAULT_THEME, themeToCssVars, type ThemeConfig } from '@/lib/theme';
+import { getStoreConfig } from '@/lib/store-config';
+import { themeToCssVars } from '@/lib/theme';
 import '../../globals.css';
 
 export const metadata: Metadata = {
@@ -20,8 +20,6 @@ export const revalidate = 60;
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
-
-const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 
 export default async function LocaleLayout({
   children,
@@ -39,23 +37,11 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
-
-  const store = await db.store.findUnique({
-    where: { slug: STORE_SLUG },
-    select: { themeConfig: true },
-  });
-
-  const dbTheme = store?.themeConfig as Partial<ThemeConfig> | null;
-
-  const theme: ThemeConfig = {
-    colors: { ...DEFAULT_THEME.colors, ...(dbTheme?.colors ?? {}) },
-    layout: { ...DEFAULT_THEME.layout, ...(dbTheme?.layout ?? {}) },
-  };
-
-  const cssVars = themeToCssVars(theme);
+  const config = await getStoreConfig();
+  const cssVars = themeToCssVars(config.theme);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} data-vertical={config.vertical.vertical}>
       <body style={cssVars as React.CSSProperties}>
         <NextIntlClientProvider messages={messages}>
           <Header />

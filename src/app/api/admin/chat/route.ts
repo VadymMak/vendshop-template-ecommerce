@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { OrderStatus, PaymentStatus, PromoType } from '@prisma/client';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
+import { getVerticalConfig } from '@/lib/verticals';
 
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL ?? 'claude-haiku-4-5-20251001';
@@ -163,6 +164,14 @@ const TOOLS = [
         navPosition:   { type: 'string', enum: ['top', 'side'] },
         borderRadius:  { type: 'string', enum: ['sharp', 'rounded', 'pill'] },
       },
+    },
+  },
+  {
+    name: 'get_store_config',
+    description: 'Get store vertical config (features, delivery modes, checkout, UI)',
+    input_schema: {
+      type: 'object' as const,
+      properties: {},
     },
   },
 ] as const;
@@ -440,6 +449,15 @@ async function executeTool(tool: ToolParams): Promise<string> {
       const changed = [...Object.keys(newColors), ...Object.keys(newLayout)];
       revalidatePath('/', 'layout');
       return JSON.stringify({ message: `Theme updated: ${changed.join(', ')}`, theme: updatedTheme });
+    }
+
+    case 'get_store_config': {
+      const storeData = await db.store.findUniqueOrThrow({
+        where: { slug: STORE_SLUG },
+        select: { id: true, name: true, slug: true, vertical: true },
+      });
+      const verticalConfig = getVerticalConfig(storeData.vertical);
+      return JSON.stringify({ store: storeData, config: verticalConfig });
     }
 
     default:

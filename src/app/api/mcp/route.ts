@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { OrderStatus, PaymentStatus, PromoType } from '@prisma/client';
 import { DEFAULT_THEME, type ThemeConfig } from '@/lib/theme';
+import { getVerticalConfig } from '@/lib/verticals';
 
 const STORE_SLUG = process.env.STORE_SLUG ?? 'electromarket';
 
@@ -463,6 +464,24 @@ function createServer() {
     }
   );
 
+  // ── STORE CONFIG ──────────────────────────────────────────────────────────
+
+  server.registerTool(
+    'get_store_config',
+    {
+      description: 'Get full store configuration including vertical type, features, delivery modes, checkout options, and UI settings',
+      inputSchema: {},
+    },
+    async () => {
+      const store = await db.store.findUniqueOrThrow({
+        where: { slug: STORE_SLUG },
+        select: { id: true, name: true, slug: true, vertical: true, themeConfig: true },
+      });
+      const verticalConfig = getVerticalConfig(store.vertical);
+      return text({ store: { id: store.id, name: store.name, slug: store.slug, vertical: store.vertical }, config: verticalConfig });
+    }
+  );
+
   return server;
 }
 
@@ -506,6 +525,7 @@ export async function GET(req: Request) {
         'get_theme',
         'update_theme',
         'search_knowledge',
+        'get_store_config',
       ],
       claudeDesktopConfig: {
         mcpServers: {
