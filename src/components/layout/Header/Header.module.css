@@ -342,7 +342,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: transparent;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
