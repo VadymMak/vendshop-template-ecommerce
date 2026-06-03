@@ -236,5 +236,18 @@
     "allProducts": "Všetky produkty",
     "productsCount": "{count} produktov",
     "seoText": "Kúpiť {category} na Ukrajine je s ElectroMarket jednoduché. Náš katalóg ponúka široký sortiment od popredných svetových značiek za najlepšie ceny.\n\nPonúkame oficiálnu záruku, rýchle doručenie Nova Pošta po celej krajine a pohodlné spôsoby platby. Objednávajte online — vaše náradie doručíme za 1–2 dni."
+  },
+  "hero": {
+    "tagline": "AUTENTICKÁ TALIANSKA KUCHYŇA",
+    "title": "Chuť Talianska v",
+    "titleAccent": "Každom",
+    "titleEnd": "Súste",
+    "subtitle": "Rodinné recepty z Neapola od roku 1987. Čerstvé cestoviny, pizza z dreva a najlepšie vína — podávané s láskou.",
+    "bookTable": "Rezervovať stôl",
+    "viewMenu": "Zobraziť menu",
+    "todaysSpecial": "DENNÉ ŠPECIÁL",
+    "orderNow": "Objednať",
+    "googleRating": "4.8 na Google",
+    "openUntil": "Otvorené do 23:00"
   }
 }

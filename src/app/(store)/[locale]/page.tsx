@@ -87,5 +87,5 @@ export default async function HomePage({
     stockLeft: 7,
   };
 
-  return <HomeClient products={products} productOfDay={productOfDay} />;
+  return <HomeClient products={products} productOfDay={productOfDay} storeName={store.name} />;
 }

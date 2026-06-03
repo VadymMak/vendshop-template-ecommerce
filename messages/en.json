@@ -236,5 +236,18 @@
     "allProducts": "All products",
     "productsCount": "{count} products",
     "seoText": "Buying {category} in Ukraine is easy with ElectroMarket. Our catalog features a wide range from leading global brands at the best prices.\n\nWe offer an official warranty, fast Nova Poshta delivery across the country, and convenient payment options. Order online and get your tool delivered within 1–2 days."
+  },
+  "hero": {
+    "tagline": "AUTHENTIC ITALIAN CUISINE",
+    "title": "Taste of Italy in",
+    "titleAccent": "Every",
+    "titleEnd": "Bite",
+    "subtitle": "Family recipes from Naples since 1987. Fresh pasta, wood-fired pizza, and the finest wines — served with amore.",
+    "bookTable": "Book a Table",
+    "viewMenu": "View Menu",
+    "todaysSpecial": "TODAY'S SPECIAL",
+    "orderNow": "Order Now",
+    "googleRating": "4.8 on Google",
+    "openUntil": "Open until 23:00"
   }
 }

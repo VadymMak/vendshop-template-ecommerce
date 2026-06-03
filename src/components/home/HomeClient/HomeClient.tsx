@@ -1,5 +1,6 @@
 'use client';
 
+import HeroSection from '@/components/home/HeroSection/HeroSection';
 import CategoriesGrid from '@/components/home/CategoriesGrid/CategoriesGrid';
 import BestSellers from '@/components/home/BestSellers/BestSellers';
 import ProductOfDay from '@/components/home/ProductOfDay/ProductOfDay';
@@ -20,6 +21,7 @@ export type ProductData = Omit<ProductCardProps, 'onAddToCart' | 'onCompare' | '
 interface HomeClientProps {
   products: ProductData[];
   productOfDay: ProductOfDayData;
+  storeName: string;
 }
 
 // Module-level constant: countdown target is fixed for the session duration.
@@ -28,7 +30,7 @@ const ENDS_AT = new Date(Date.now() + ((2 * 24 + 14) * 3600 + 37 * 60 + 22) * 10
 const noop = (_id: string) => {};
 const noopStr = (_s: string) => {};
 
-export default function HomeClient({ products, productOfDay }: HomeClientProps) {
+export default function HomeClient({ products, productOfDay, storeName }: HomeClientProps) {
   const vConfig = useVerticalConfig();
   const sections = vConfig.ui.homeSections;
 
@@ -74,12 +76,30 @@ export default function HomeClient({ products, productOfDay }: HomeClientProps) 
           case 'popular-tags':
             return <PopularTags key={section} />;
 
+          case 'hero':
+            // ECOMMERCE hero not implemented — guard prevents rendering
+            if (vConfig.vertical === 'ECOMMERCE') return null;
+            return (
+              <HeroSection
+                key={section}
+                storeName={storeName}
+                dailySpecial={
+                  fullProducts[0]
+                    ? {
+                        name: fullProducts[0].name,
+                        price: fullProducts[0].price,
+                        currency: fullProducts[0].currency ?? '€',
+                      }
+                    : undefined
+                }
+              />
+            );
+
           // Future vertical sections — not yet implemented
           case 'delivery-zones':
           case 'menu-categories':
           case 'daily-specials':
           case 'reservations':
-          case 'hero':
             return null;
 
           default:
