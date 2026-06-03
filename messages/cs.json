@@ -254,7 +254,15 @@
     "successTitle": "Děkujeme za objednávku!",
     "successMessage": "Brzy vás budeme kontaktovat",
     "continueShopping": "Pokračovat v nákupu",
-    "backToHome": "Na hlavní"
+    "backToHome": "Na hlavní",
+    "dineIn": "V restauraci",
+    "courierDelivery": "Doručení",
+    "takeaway": "S sebou",
+    "payByCard": "Platba kartou",
+    "payAtTable": "Platba u stolu",
+    "successTitleRestaurant": "Objednávka přijata!",
+    "successMessageRestaurant": "Vaše objednávka se připravuje. Upozorníme vás, jakmile bude hotová.",
+    "viewMenu": "Zobrazit menu"
   },
   "brand": {
     "allProducts": "Všechny produkty značky",

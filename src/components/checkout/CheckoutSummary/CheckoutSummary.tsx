@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useCartStore } from '@/stores/useCartStore';
+import { useVerticalConfig } from '@/lib/vertical-context';
 import styles from './CheckoutSummary.module.css';
 
 const FREE_DELIVERY_THRESHOLD = 2000;
@@ -11,6 +12,8 @@ const DELIVERY_FEE = 99;
 export default function CheckoutSummary() {
   const t = useTranslations('checkout');
   const tc = useTranslations('cart');
+  const vConfig = useVerticalConfig();
+  const isRestaurant = vConfig.vertical === 'RESTAURANT';
 
   const items = useCartStore((s) => s.items);
   const [hydrated, setHydrated] = useState(false);
@@ -28,16 +31,16 @@ export default function CheckoutSummary() {
       0,
     );
     const payable = sub - disc;
-    const free = payable === 0 || payable > FREE_DELIVERY_THRESHOLD;
+    const free = isRestaurant || payable === 0 || payable > FREE_DELIVERY_THRESHOLD;
     const fee = free ? 0 : DELIVERY_FEE;
     return { subtotal: sub, discount: disc, deliveryFee: fee, deliveryFree: free, total: payable + fee };
-  }, [items]);
+  }, [items, isRestaurant]);
 
   const formatPrice = (value: number) => new Intl.NumberFormat('uk-UA').format(value);
   const shown = hydrated ? items : [];
 
   return (
-    <aside className={styles.sum}>
+    <aside className={`${styles.sum} ${isRestaurant ? styles.sumDark : ''}`}>
       <h2 className={styles.title}>{tc('orderSummary')}</h2>
 
       <ul className={styles.items}>

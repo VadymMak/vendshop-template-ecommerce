@@ -89,7 +89,7 @@ export default function CartItem({ item, onQuantityChange, onDelete, onCheck }: 
       </Link>
 
       <div className={styles.info}>
-        <span className={styles.brand}>{item.brand}</span>
+        {item.brand && <span className={styles.brand}>{item.brand}</span>}
         <h3 className={styles.name}>
           <Link href={href}>{item.name}</Link>
         </h3>

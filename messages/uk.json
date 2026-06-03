@@ -254,7 +254,15 @@
     "successTitle": "Дякуємо за замовлення!",
     "successMessage": "Ми зв'яжемося з вами найближчим часом",
     "continueShopping": "Продовжити покупки",
-    "backToHome": "На головну"
+    "backToHome": "На головну",
+    "dineIn": "В залі",
+    "courierDelivery": "Доставка",
+    "takeaway": "На винос",
+    "payByCard": "Карткою онлайн",
+    "payAtTable": "Оплата за столом",
+    "successTitleRestaurant": "Замовлення прийнято!",
+    "successMessageRestaurant": "Ваше замовлення готується. Ми повідомимо вас, коли воно буде готове.",
+    "viewMenu": "Переглянути меню"
   },
   "brand": {
     "allProducts": "Всі товари бренду",

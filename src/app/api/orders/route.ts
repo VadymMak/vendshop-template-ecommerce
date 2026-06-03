@@ -23,12 +23,14 @@ interface CheckoutBody {
   lastName: string;
   phone: string;
   email: string;
-  deliveryMethod: 'branch' | 'courier' | 'pickup';
+  deliveryMethod: 'branch' | 'courier' | 'pickup' | 'dine_in';
   city: string;
   branch: string;
-  paymentMethod: 'wayforpay' | 'liqpay' | 'cod' | 'installments';
+  paymentMethod: string;
   comment: string;
   items: CartItem[];
+  tableNumber?: string;
+  timeSlot?: string;
 }
 
 // GET /api/orders — admin only list
@@ -107,7 +109,8 @@ export async function POST(request: Request) {
 
     // Generate human-readable order number
     const orderCount = await db.order.count({ where: { storeId: store.id } });
-    const orderNumber = `EM-${new Date().getFullYear()}-${String(orderCount + 1).padStart(4, '0')}`;
+    const slugPrefix = store.slug.substring(0, 2).toUpperCase();
+    const orderNumber = `${slugPrefix}-${new Date().getFullYear()}-${String(orderCount + 1).padStart(4, '0')}`;
 
     // Upsert customer by email
     let customerId: string | null = null;
@@ -129,9 +132,10 @@ export async function POST(request: Request) {
     }
 
     const deliveryModeMap: Record<CheckoutBody['deliveryMethod'], DeliveryMode> = {
-      branch: DeliveryMode.SHIPPING,
+      branch:  DeliveryMode.SHIPPING,
       courier: DeliveryMode.COURIER,
-      pickup: DeliveryMode.PICKUP,
+      pickup:  DeliveryMode.PICKUP,
+      dine_in: DeliveryMode.DINE_IN,
     };
 
     const order = await db.order.create({
@@ -144,17 +148,19 @@ export async function POST(request: Request) {
         guestPhone: customerId ? null : body.phone,
         deliveryMode: deliveryModeMap[body.deliveryMethod],
         deliveryAddress: {
-          city: body.city,
-          branch: body.branch,
-          country: 'UA',
+          city: body.city || null,
+          branch: body.branch || null,
+          country: store.vertical === 'RESTAURANT' ? 'IT' : 'UA',
+          ...(body.tableNumber ? { tableNumber: body.tableNumber } : {}),
+          ...(body.timeSlot ? { timeSlot: body.timeSlot } : {}),
         },
         paymentMethod: body.paymentMethod,
-        paymentStatus: body.paymentMethod === 'cod' ? PaymentStatus.UNPAID : PaymentStatus.UNPAID,
+        paymentStatus: PaymentStatus.UNPAID,
         subtotal,
         deliveryFee,
         discount: 0,
         total,
-        currency: 'грн',
+        currency: store.vertical === 'RESTAURANT' ? '€' : 'грн',
         customerNote: body.comment || null,
         items: {
           create: body.items.map((item) => {

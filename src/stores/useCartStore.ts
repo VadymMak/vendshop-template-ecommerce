@@ -62,7 +62,7 @@ export const useCartStore = create<CartStore>()(
       isInCart: (id) => get().items.some((i) => i.id === id),
     }),
     {
-      name: 'electromarket-cart',
+      name: `${process.env.NEXT_PUBLIC_STORE_SLUG ?? 'store'}-cart`,
       // Hydrate manually after mount (see components) to avoid SSR mismatch.
       skipHydration: true,
     },

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCartStore } from '@/stores/useCartStore';
+import { useVerticalConfig } from '@/lib/vertical-context';
 import CartItem from '@/components/cart/CartItem/CartItem';
 import OrderSummary from '@/components/cart/OrderSummary/OrderSummary';
 import styles from './CartPage.module.css';
@@ -45,6 +46,8 @@ function BigCartIcon() {
 
 export default function CartPage() {
   const t = useTranslations('cart');
+  const vConfig = useVerticalConfig();
+  const isRestaurant = vConfig.vertical === 'RESTAURANT';
 
   const items = useCartStore((s) => s.items);
   const removeItem = useCartStore((s) => s.removeItem);
@@ -82,7 +85,7 @@ export default function CartPage() {
   // empty state for a user who actually has items.
   if (!hydrated) {
     return (
-      <div className={styles.cart}>
+      <div className={`${styles.cart} ${isRestaurant ? styles.cartDark : ''}`}>
         <h1 className={styles.h1}>{t('title')}</h1>
       </div>
     );
@@ -91,7 +94,7 @@ export default function CartPage() {
   // Empty state
   if (items.length === 0) {
     return (
-      <div className={styles.cart}>
+      <div className={`${styles.cart} ${isRestaurant ? styles.cartDark : ''}`}>
         <h1 className={styles.h1}>{t('title')}</h1>
         <div className={styles.empty}>
           <div className={styles.emptyIco}>
@@ -107,7 +110,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className={styles.cart}>
+    <div className={`${styles.cart} ${isRestaurant ? styles.cartDark : ''}`}>
       <h1 className={styles.h1}>
         {t('title')}
         <span className={styles.count}>{t('itemsCount', { count: items.length })}</span>

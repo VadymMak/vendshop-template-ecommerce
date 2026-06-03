@@ -254,7 +254,15 @@
     "successTitle": "Спасибо за заказ!",
     "successMessage": "Мы свяжемся с вами в ближайшее время",
     "continueShopping": "Продолжить покупки",
-    "backToHome": "На главную"
+    "backToHome": "На главную",
+    "dineIn": "В зале",
+    "courierDelivery": "Доставка",
+    "takeaway": "Навынос",
+    "payByCard": "Картой онлайн",
+    "payAtTable": "Оплата за столом",
+    "successTitleRestaurant": "Заказ принят!",
+    "successMessageRestaurant": "Ваш заказ готовится. Мы уведомим вас, когда он будет готов.",
+    "viewMenu": "Перейти в меню"
   },
   "brand": {
     "allProducts": "Все товары бренда",

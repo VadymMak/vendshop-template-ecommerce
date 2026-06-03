@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCartStore } from '@/stores/useCartStore';
+import { useVerticalConfig } from '@/lib/vertical-context';
 import styles from './OrderSuccess.module.css';
 
 // Confetti pieces — fixed positions/colours so render is deterministic; only the
@@ -21,6 +22,8 @@ const CONFETTI = [
 
 export default function OrderSuccess() {
   const t = useTranslations('checkout');
+  const vConfig = useVerticalConfig();
+  const isRestaurant = vConfig.vertical === 'RESTAURANT';
 
   // Generated client-side after mount so SSR and client markup match (no
   // hydration mismatch from Math.random()).
@@ -34,7 +37,7 @@ export default function OrderSuccess() {
   }, [clearCart]);
 
   return (
-    <div className={styles.wrap}>
+    <div className={`${styles.wrap} ${isRestaurant ? styles.wrapDark : ''}`}>
       <div className={styles.confetti} aria-hidden="true">
         {CONFETTI.map((c, i) => (
           <span
@@ -52,17 +55,21 @@ export default function OrderSuccess() {
           </svg>
         </span>
 
-        <h1 className={styles.title}>{t('successTitle')}</h1>
+        <h1 className={styles.title}>
+          {isRestaurant ? t('successTitleRestaurant') : t('successTitle')}
+        </h1>
 
         <p className={styles.orderNo}>
           {t('orderNumber')} #{orderNo ?? '······'}
         </p>
 
-        <p className={styles.message}>{t('successMessage')}</p>
+        <p className={styles.message}>
+          {isRestaurant ? t('successMessageRestaurant') : t('successMessage')}
+        </p>
 
         <div className={styles.actions}>
           <Link href="/catalog" className={styles.btnPrimary}>
-            {t('continueShopping')}
+            {isRestaurant ? t('viewMenu') : t('continueShopping')}
           </Link>
           <Link href="/" className={styles.btnSecondary}>
             {t('backToHome')}

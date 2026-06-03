@@ -254,7 +254,15 @@
     "successTitle": "Vielen Dank für Ihre Bestellung!",
     "successMessage": "Wir werden Sie in Kürze kontaktieren",
     "continueShopping": "Weiter einkaufen",
-    "backToHome": "Zur Startseite"
+    "backToHome": "Zur Startseite",
+    "dineIn": "Vor Ort essen",
+    "courierDelivery": "Lieferung",
+    "takeaway": "Zum Mitnehmen",
+    "payByCard": "Kartenzahlung",
+    "payAtTable": "Bezahlung am Tisch",
+    "successTitleRestaurant": "Bestellung eingegangen!",
+    "successMessageRestaurant": "Ihre Bestellung wird zubereitet. Wir benachrichtigen Sie, wenn sie fertig ist.",
+    "viewMenu": "Speisekarte ansehen"
   },
   "brand": {
     "allProducts": "Alle Markenprodukte",

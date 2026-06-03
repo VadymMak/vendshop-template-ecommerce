@@ -7,8 +7,8 @@ import { useCartStore } from '@/stores/useCartStore';
 import { useVerticalConfig } from '@/lib/vertical-context';
 import styles from './CheckoutForm.module.css';
 
-type DeliveryMethod = 'branch' | 'courier' | 'pickup';
-type PaymentMethod = 'wayforpay' | 'liqpay' | 'cod' | 'installments';
+type DeliveryMethod = 'branch' | 'courier' | 'pickup' | 'dine_in';
+type PaymentMethod = 'wayforpay' | 'liqpay' | 'cod' | 'installments' | 'card' | 'at_table';
 
 interface FormData {
   firstName: string;
@@ -91,20 +91,63 @@ function SplitIcon() {
   );
 }
 
+function DineInIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" {...stroke} aria-hidden="true">
+      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+      <path d="M7 2v20" />
+      <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+    </svg>
+  );
+}
+
+function ScooterIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" {...stroke} aria-hidden="true">
+      <circle cx="5" cy="18" r="3" />
+      <circle cx="19" cy="18" r="3" />
+      <path d="M7.5 18h5l1-6h4l2 6" />
+      <path d="M12 18V9l-4-2" />
+    </svg>
+  );
+}
+
+function TakeawayIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" {...stroke} aria-hidden="true">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+      <path d="M3 6h18" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  );
+}
+
+function TablePayIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" {...stroke} aria-hidden="true">
+      <rect x="2" y="7" width="20" height="14" rx="2" />
+      <path d="M16 3h-8v4h8z" />
+      <path d="M12 11v6M9 14h6" />
+    </svg>
+  );
+}
+
 export default function CheckoutForm() {
   const t = useTranslations('checkout');
   const router = useRouter();
   const vConfig = useVerticalConfig();
+
+  const isRestaurant = vConfig.vertical === 'RESTAURANT';
 
   const [data, setData] = useState<FormData>({
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
-    deliveryMethod: 'branch',
+    deliveryMethod: isRestaurant ? 'dine_in' : 'branch',
     city: '',
     branch: '',
-    paymentMethod: 'wayforpay',
+    paymentMethod: isRestaurant ? 'card' : 'wayforpay',
     comment: '',
   });
   const [errors, setErrors] = useState<Record<string, boolean>>({});
@@ -113,18 +156,29 @@ export default function CheckoutForm() {
   const set = <K extends keyof FormData>(key: K, value: FormData[K]) =>
     setData((d) => ({ ...d, [key]: value }));
 
-  const deliveryCards: { value: DeliveryMethod; label: string; icon: ReactNode }[] = [
-    { value: 'branch', label: t('novaPoshta'), icon: <BoxIcon /> },
-    { value: 'courier', label: t('novaPoshtaCourier'), icon: <TruckIcon /> },
-    { value: 'pickup', label: t('selfPickup'), icon: <StoreIcon /> },
-  ];
+  const deliveryCards: { value: DeliveryMethod; label: string; icon: ReactNode }[] = isRestaurant
+    ? [
+        { value: 'dine_in', label: t('dineIn'), icon: <DineInIcon /> },
+        { value: 'courier', label: t('courierDelivery'), icon: <ScooterIcon /> },
+        { value: 'pickup', label: t('takeaway'), icon: <TakeawayIcon /> },
+      ]
+    : [
+        { value: 'branch', label: t('novaPoshta'), icon: <BoxIcon /> },
+        { value: 'courier', label: t('novaPoshtaCourier'), icon: <TruckIcon /> },
+        { value: 'pickup', label: t('selfPickup'), icon: <StoreIcon /> },
+      ];
 
-  const paymentCards: { value: PaymentMethod; label: string; icon: ReactNode }[] = [
-    { value: 'wayforpay', label: t('payOnline'), icon: <CardIcon /> },
-    { value: 'liqpay', label: t('liqpay'), icon: <CardIcon /> },
-    { value: 'cod', label: t('cashOnDelivery'), icon: <CashIcon /> },
-    { value: 'installments', label: t('installments'), icon: <SplitIcon /> },
-  ];
+  const paymentCards: { value: PaymentMethod; label: string; icon: ReactNode }[] = isRestaurant
+    ? [
+        { value: 'card', label: t('payByCard'), icon: <CardIcon /> },
+        { value: 'at_table', label: t('payAtTable'), icon: <TablePayIcon /> },
+      ]
+    : [
+        { value: 'wayforpay', label: t('payOnline'), icon: <CardIcon /> },
+        { value: 'liqpay', label: t('liqpay'), icon: <CardIcon /> },
+        { value: 'cod', label: t('cashOnDelivery'), icon: <CashIcon /> },
+        { value: 'installments', label: t('installments'), icon: <SplitIcon /> },
+      ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -177,7 +231,7 @@ export default function CheckoutForm() {
   );
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form className={`${styles.form} ${isRestaurant ? styles.formDark : ''}`} onSubmit={handleSubmit} noValidate>
       {/* Contact info */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>{t('contactInfo')}</h2>
@@ -239,7 +293,7 @@ export default function CheckoutForm() {
           ))}
         </div>
 
-        {data.deliveryMethod !== 'pickup' && (
+        {data.deliveryMethod !== 'pickup' && data.deliveryMethod !== 'dine_in' && (
           <div className={styles.grid2}>
             <div className={styles.field}>
               <label className={styles.label} htmlFor="city">

@@ -254,7 +254,15 @@
     "successTitle": "Thank you for your order!",
     "successMessage": "We will contact you shortly",
     "continueShopping": "Continue shopping",
-    "backToHome": "Back to home"
+    "backToHome": "Back to home",
+    "dineIn": "Dine In",
+    "courierDelivery": "Delivery",
+    "takeaway": "Takeaway",
+    "payByCard": "Pay by Card",
+    "payAtTable": "Pay at Table",
+    "successTitleRestaurant": "Order Received!",
+    "successMessageRestaurant": "Your order is being prepared. We'll notify you when it's ready.",
+    "viewMenu": "View Menu"
   },
   "brand": {
     "allProducts": "All brand products",

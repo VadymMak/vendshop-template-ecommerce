@@ -27,3 +27,13 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Restaurant dark ── */
+.pageDark {
+  background: #0a0a0a;
+  min-height: 100vh;
+  padding-top: 90px;
+}
+.pageDark .h1 {
+  color: #f5f5f5;
+}
