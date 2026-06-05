@@ -23,6 +23,15 @@ type TFn = ReturnType<typeof useTranslations<'Header'>>;
 
 function RestaurantHeader({ storeName, phone, t }: { storeName: string; phone: string; t: TFn }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setIsMenuOpen(false);
+  };
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -65,11 +74,11 @@ function RestaurantHeader({ storeName, phone, t }: { storeName: string; phone: s
 
         {/* Desktop nav */}
         <nav className={styles.restaurantNav}>
-          <a href="/#menu">{t('restaurantMenu')}</a>
-          <a href="/#reservations">{t('restaurantReservations')}</a>
-          <a href="/#gallery">{t('restaurantGallery')}</a>
-          <a href="/#about">{t('restaurantAbout')}</a>
-          <a href="/#contacts">{t('restaurantContacts')}</a>
+          <a href="/#menu" onClick={(e) => scrollTo(e, 'menu')}>{t('restaurantMenu')}</a>
+          <a href="/#reservations" onClick={(e) => scrollTo(e, 'reservations')}>{t('restaurantReservations')}</a>
+          <a href="/#gallery" onClick={(e) => scrollTo(e, 'gallery')}>{t('restaurantGallery')}</a>
+          <a href="/#about" onClick={(e) => scrollTo(e, 'about')}>{t('restaurantAbout')}</a>
+          <a href="/#contacts" onClick={(e) => scrollTo(e, 'contacts')}>{t('restaurantContacts')}</a>
         </nav>
 
         {/* Phone */}
@@ -110,11 +119,11 @@ function RestaurantHeader({ storeName, phone, t }: { storeName: string; phone: s
       {/* Mobile dropdown */}
       {isMenuOpen && (
         <div className={styles.restaurantMobileMenu}>
-          <a href="/#menu" onClick={() => setIsMenuOpen(false)}>{t('restaurantMenu')}</a>
-          <a href="/#reservations" onClick={() => setIsMenuOpen(false)}>{t('restaurantReservations')}</a>
-          <a href="/#gallery" onClick={() => setIsMenuOpen(false)}>{t('restaurantGallery')}</a>
-          <a href="/#about" onClick={() => setIsMenuOpen(false)}>{t('restaurantAbout')}</a>
-          <a href="/#contacts" onClick={() => setIsMenuOpen(false)}>{t('restaurantContacts')}</a>
+          <a href="/#menu" onClick={(e) => scrollTo(e, 'menu')}>{t('restaurantMenu')}</a>
+          <a href="/#reservations" onClick={(e) => scrollTo(e, 'reservations')}>{t('restaurantReservations')}</a>
+          <a href="/#gallery" onClick={(e) => scrollTo(e, 'gallery')}>{t('restaurantGallery')}</a>
+          <a href="/#about" onClick={(e) => scrollTo(e, 'about')}>{t('restaurantAbout')}</a>
+          <a href="/#contacts" onClick={(e) => scrollTo(e, 'contacts')}>{t('restaurantContacts')}</a>
           <a href={`tel:${phone.replace(/[^+\d]/g, '')}`} onClick={() => setIsMenuOpen(false)}>{phone}</a>
         </div>
       )}

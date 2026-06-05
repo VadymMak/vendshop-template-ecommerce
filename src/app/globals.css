@@ -40,6 +40,10 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-padding-top: 80px;
+}
+
 body {
   font-family:
     system-ui,
