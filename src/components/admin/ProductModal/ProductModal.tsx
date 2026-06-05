@@ -21,7 +21,7 @@ export interface ProductFormData {
 export interface ProductModalProps {
   mode: 'add' | 'edit';
   initial: ProductFormData;
-  categories: { slug: string; label: string }[];
+  categories: { id: string; slug: string; label: string }[];
   vertical?: Vertical;
   onSave: (data: ProductFormData) => void;
   onClose: () => void;

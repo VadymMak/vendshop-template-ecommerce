@@ -11,50 +11,70 @@ import styles from './products.module.css';
 interface AdminProduct {
   id: string;
   name: string;
+  slug: string;
   sku: string;
   categorySlug: string;
+  categoryId: string;
   brand: string;
   price: number;
   oldPrice?: number;
+  currency: string;
   inStock: boolean;
   image: string;
+  isHit: boolean;
+  isNew: boolean;
+  dietaryTags: string[];
+  allergens: string;
+  portion: string;
+  prepTime: number;
 }
 
-const CATEGORIES_ECOMMERCE: { slug: string; label: string }[] = [
-  { slug: 'drills', label: 'Дрелі' },
-  { slug: 'grinders', label: 'Болгарки' },
-  { slug: 'perforators', label: 'Перфоратори' },
-  { slug: 'jigsaws', label: 'Лобзики' },
-  { slug: 'sanders', label: 'Шліфмашини' },
-];
+interface CategoryItem {
+  id: string;
+  slug: string;
+  label: string;
+}
 
-const CATEGORIES_RESTAURANT: { slug: string; label: string }[] = [
-  { slug: 'antipasti', label: 'Антипасті' },
-  { slug: 'primo', label: 'Першi страви' },
-  { slug: 'secondo', label: 'Другi страви' },
-  { slug: 'pizza', label: 'Піца' },
-  { slug: 'pasta', label: 'Паста' },
-  { slug: 'dolce', label: 'Десерти' },
-  { slug: 'drinks', label: 'Напої' },
-];
+interface Props {
+  vertical: Vertical;
+  initialProducts: AdminProduct[];
+  categories: CategoryItem[];
+}
 
-const BRANDS = ['MAKITA', 'BOSCH', 'DEWALT', 'MILWAUKEE', 'METABO'];
-const PLACEHOLDER = '/placeholder-product.svg';
 const PAGE_SIZE = 6;
 
-const INITIAL_PRODUCTS: AdminProduct[] = [
-  { id: 'c1', name: 'Дриль-шурупокрут Makita DF333DSAE 12V', sku: 'DF333DSAE', categorySlug: 'drills', brand: 'MAKITA', price: 2990, oldPrice: 3499, inStock: true, image: PLACEHOLDER },
-  { id: 'c2', name: 'Кутова шліфмашина DeWalt DWE4157 900 Вт', sku: 'DWE4157', categorySlug: 'grinders', brand: 'DEWALT', price: 3199, oldPrice: 4099, inStock: true, image: PLACEHOLDER },
-  { id: 'c3', name: 'Перфоратор Bosch GBH 2-26 DRE Professional', sku: 'GBH226DRE', categorySlug: 'perforators', brand: 'BOSCH', price: 5749, inStock: true, image: PLACEHOLDER },
-  { id: 'c4', name: 'Гайковерт ударний Milwaukee M18 FIW2F12', sku: 'FIW2F12', categorySlug: 'drills', brand: 'MILWAUKEE', price: 8999, oldPrice: 10999, inStock: true, image: PLACEHOLDER },
-  { id: 'c5', name: 'Лобзик Metabo STEB 65 Quick 450 Вт', sku: 'STEB65', categorySlug: 'jigsaws', brand: 'METABO', price: 4290, inStock: true, image: PLACEHOLDER },
-  { id: 'c6', name: 'Перфоратор Makita HR2470 780 Вт SDS-Plus', sku: 'HR2470', categorySlug: 'perforators', brand: 'MAKITA', price: 4599, oldPrice: 5250, inStock: true, image: PLACEHOLDER },
-  { id: 'c7', name: 'Шліфмашина ексцентрикова Bosch GEX 40-150', sku: 'GEX40150', categorySlug: 'sanders', brand: 'BOSCH', price: 6290, oldPrice: 8990, inStock: true, image: PLACEHOLDER },
-  { id: 'c8', name: 'Дриль ударна DeWalt DWD024 701 Вт', sku: 'DWD024', categorySlug: 'drills', brand: 'DEWALT', price: 2450, inStock: false, image: PLACEHOLDER },
-  { id: 'c9', name: 'Болгарка Milwaukee M18 FSAG125XB 125 мм', sku: 'FSAG125XB', categorySlug: 'grinders', brand: 'MILWAUKEE', price: 7990, oldPrice: 10650, inStock: true, image: PLACEHOLDER },
-];
+function mapApiProduct(p: Record<string, unknown>, cats: CategoryItem[] = []): AdminProduct {
+  const meta = (p.metadata ?? {}) as Record<string, unknown>;
+  const cat = p.category as Record<string, unknown> | null;
+  const categoryId = (p.categoryId as string) ?? '';
+  const categorySlug =
+    (cat?.slug as string) ?? cats.find((c) => c.id === categoryId)?.slug ?? '';
+  return {
+    id: p.id as string,
+    name: p.nameKey as string,
+    slug: p.slug as string,
+    sku: (meta.sku as string) ?? '',
+    categorySlug,
+    categoryId,
+    brand: (p.brand as string) ?? '',
+    price: p.price as number,
+    oldPrice: (p.oldPrice as number | null) ?? undefined,
+    currency: (p.currency as string) ?? 'UAH',
+    inStock: p.inStock as boolean,
+    image: (p.image as string) ?? '/placeholder-product.svg',
+    isHit: (p.isHit as boolean) ?? false,
+    isNew: (p.isNew as boolean) ?? false,
+    dietaryTags: (meta.dietaryTags as string[]) ?? [],
+    allergens: (meta.allergens as string) ?? '',
+    portion: (meta.portion as string) ?? '',
+    prepTime: (meta.prepTime as number) ?? 0,
+  };
+}
 
-const fmt = (n: number) => new Intl.NumberFormat('uk-UA').format(n);
+const fmtPrice = (price: number, currency: string) => {
+  if (currency === 'EUR') return `€${price.toFixed(2)}`;
+  return `${new Intl.NumberFormat('uk-UA').format(price)} грн`;
+};
 
 const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.75, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 
@@ -82,13 +102,11 @@ function ArrowR() {
 
 type ModalState = { mode: 'add' } | { mode: 'edit'; id: string } | null;
 
-export default function AdminProductsClient({ vertical }: { vertical: Vertical }) {
+export default function AdminProductsClient({ vertical, initialProducts, categories }: Props) {
   const isRestaurant = vertical === 'RESTAURANT';
-  const CATEGORIES = isRestaurant ? CATEGORIES_RESTAURANT : CATEGORIES_ECOMMERCE;
 
-  const catLabel = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
-
-  const [products, setProducts] = useState<AdminProduct[]>(INITIAL_PRODUCTS);
+  const [products, setProducts] = useState<AdminProduct[]>(initialProducts);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [brandFilter, setBrandFilter] = useState('all');
@@ -97,6 +115,13 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState<ModalState>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const brands = useMemo(() => {
+    const set = new Set(products.map((p) => p.brand).filter(Boolean));
+    return Array.from(set).sort();
+  }, [products]);
+
+  const catLabel = (slug: string) => categories.find((c) => c.slug === slug)?.label ?? slug;
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -124,56 +149,126 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
   const toggleAll = () =>
     setChecked(allFilteredChecked ? new Set() : new Set(filtered.map((p) => p.id)));
 
-  const toggleStock = (id: string) =>
-    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, inStock: !p.inStock } : p)));
-
-  const deleteSelected = () => {
-    setProducts((prev) => prev.filter((p) => !checked.has(p.id)));
-    setChecked(new Set());
-  };
-
-  const doDelete = () => {
-    if (!deletingId) return;
-    const id = deletingId;
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-    setChecked((prev) => {
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
-    setDeletingId(null);
-  };
-
-  const handleSave = (data: ProductFormData) => {
-    console.log('[admin product save]', data);
-    const price = Number(data.price) || 0;
-    const oldPrice = data.oldPrice ? Number(data.oldPrice) : undefined;
-    if (modal?.mode === 'edit') {
-      const id = modal.id;
-      setProducts((prev) =>
-        prev.map((p) =>
-          p.id === id
-            ? { ...p, name: data.name, brand: data.brand, categorySlug: data.category, price, oldPrice, inStock: data.inStock }
-            : p,
-        ),
-      );
-    } else {
-      setProducts((prev) => [
-        {
-          id: `new-${Date.now()}`,
-          name: data.name,
-          sku: `NEW-${String(Date.now()).slice(-5)}`,
-          categorySlug: data.category,
-          brand: data.brand,
-          price,
-          oldPrice,
-          inStock: data.inStock,
-          image: PLACEHOLDER,
-        },
-        ...prev,
-      ]);
+  const handleSave = async (data: ProductFormData) => {
+    setLoading(true);
+    try {
+      if (modal && modal.mode === 'edit') {
+        const res = await fetch(`/api/products/${modal.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nameKey: data.name,
+            brand: data.brand || null,
+            price: Number(data.price),
+            oldPrice: data.oldPrice ? Number(data.oldPrice) : null,
+            inStock: data.inStock,
+            image: data.image || null,
+            categoryId: categories.find((c) => c.slug === data.category)?.id ?? null,
+            metadata: isRestaurant
+              ? {
+                  dietaryTags: data.dietaryTags ?? [],
+                  allergens: data.allergens ?? '',
+                  portion: data.portion ?? '',
+                  prepTime: data.prepTime ?? 0,
+                }
+              : undefined,
+          }),
+        });
+        if (res.ok) {
+          const updated = await res.json() as Record<string, unknown>;
+          setProducts((prev) =>
+            prev.map((p) => (p.id === (modal as { mode: 'edit'; id: string }).id ? mapApiProduct(updated, categories) : p)),
+          );
+        }
+      } else {
+        const slug = data.name
+          .toLowerCase()
+          .replace(/[^a-z0-9а-яіїєґ\s-]/gi, '')
+          .replace(/\s+/g, '-')
+          .slice(0, 80);
+        const res = await fetch('/api/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug: `${slug}-${Date.now().toString(36)}`,
+            nameKey: data.name,
+            brand: data.brand || null,
+            price: Number(data.price),
+            oldPrice: data.oldPrice ? Number(data.oldPrice) : null,
+            inStock: data.inStock,
+            image: data.image || null,
+            categoryId: categories.find((c) => c.slug === data.category)?.id ?? null,
+            metadata: isRestaurant
+              ? {
+                  dietaryTags: data.dietaryTags ?? [],
+                  allergens: data.allergens ?? '',
+                  portion: data.portion ?? '',
+                  prepTime: data.prepTime ?? 0,
+                }
+              : { sku: `NEW-${Date.now().toString().slice(-5)}` },
+          }),
+        });
+        if (res.ok) {
+          const created = await res.json() as Record<string, unknown>;
+          setProducts((prev) => [mapApiProduct(created, categories), ...prev]);
+        }
+      }
+    } catch (err) {
+      console.error('Product save error:', err);
+    } finally {
+      setLoading(false);
+      setModal(null);
     }
-    setModal(null);
+  };
+
+  const toggleStock = async (id: string) => {
+    const product = products.find((p) => p.id === id);
+    if (!product) return;
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ inStock: !product.inStock }),
+      });
+      if (res.ok) {
+        setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, inStock: !p.inStock } : p)));
+      }
+    } catch (err) {
+      console.error('Toggle stock error:', err);
+    }
+  };
+
+  const doDelete = async () => {
+    if (!deletingId) return;
+    try {
+      const res = await fetch(`/api/products/${deletingId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setProducts((prev) => prev.filter((p) => p.id !== deletingId));
+        setChecked((prev) => {
+          const next = new Set(prev);
+          next.delete(deletingId);
+          return next;
+        });
+      }
+    } catch (err) {
+      console.error('Delete error:', err);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const deleteSelected = async () => {
+    const ids = Array.from(checked);
+    setLoading(true);
+    try {
+      await Promise.all(ids.map((id) => fetch(`/api/products/${id}`, { method: 'DELETE' })));
+      setProducts((prev) => prev.filter((p) => !checked.has(p.id)));
+      setChecked(new Set());
+    } catch (err) {
+      console.error('Bulk delete error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const editing = modal?.mode === 'edit' ? products.find((p) => p.id === modal.id) : undefined;
@@ -185,8 +280,20 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
         price: String(editing.price),
         oldPrice: editing.oldPrice != null ? String(editing.oldPrice) : '',
         inStock: editing.inStock,
+        image: editing.image !== '/placeholder-product.svg' ? editing.image : undefined,
+        dietaryTags: editing.dietaryTags,
+        allergens: editing.allergens,
+        portion: editing.portion,
+        prepTime: editing.prepTime,
       }
-    : { name: '', brand: BRANDS[0], category: CATEGORIES[0].slug, price: '', oldPrice: '', inStock: true };
+    : {
+        name: '',
+        brand: '',
+        category: categories[0]?.slug ?? '',
+        price: '',
+        oldPrice: '',
+        inStock: true,
+      };
 
   const pageTitle = isRestaurant ? 'Страви / Меню' : 'Товари';
   const addLabel = isRestaurant ? 'Додати страву' : 'Додати товар';
@@ -224,7 +331,7 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
           onChange={(e) => { setCategoryFilter(e.target.value); setPage(1); }}
         >
           <option value="all">Всі категорії</option>
-          {CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <option key={c.slug} value={c.slug}>{c.label}</option>
           ))}
         </select>
@@ -236,7 +343,7 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
             onChange={(e) => { setBrandFilter(e.target.value); setPage(1); }}
           >
             <option value="all">Всі бренди</option>
-            {BRANDS.map((b) => (
+            {brands.map((b) => (
               <option key={b} value={b}>{b}</option>
             ))}
           </select>
@@ -255,7 +362,7 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
       {checked.size > 0 && (
         <div className={styles.bulk}>
           <span>Вибрано {checked.size} {isRestaurant ? 'страв' : 'товарів'}</span>
-          <button type="button" className={styles.bulkDelete} onClick={deleteSelected}>
+          <button type="button" className={styles.bulkDelete} onClick={() => void deleteSelected()}>
             <TrashIcon />
             Видалити вибрані
           </button>
@@ -263,7 +370,7 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
       )}
 
       {/* Table */}
-      <div className={styles.tableWrap}>
+      <div className={`${styles.tableWrap} ${loading ? styles.loading : ''}`}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -292,10 +399,15 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
                   </label>
                 </td>
                 <td>
-                  <span className={styles.thumb}>
+                  <div className={styles.imgWrap}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.image} alt="" />
-                  </span>
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className={styles.productImg}
+                      loading="lazy"
+                    />
+                  </div>
                 </td>
                 <td>
                   <span className={styles.name}>{p.name}</span>
@@ -304,14 +416,16 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
                 <td><span className={styles.catBadge}>{catLabel(p.categorySlug)}</span></td>
                 {!isRestaurant && <td className={styles.brand}>{p.brand}</td>}
                 <td>
-                  <span className={styles.price}>{fmt(p.price)} грн</span>
-                  {p.oldPrice != null && <span className={styles.oldPrice}>{fmt(p.oldPrice)} грн</span>}
+                  <span className={styles.price}>{fmtPrice(p.price, p.currency)}</span>
+                  {p.oldPrice != null && (
+                    <span className={styles.oldPrice}>{fmtPrice(p.oldPrice, p.currency)}</span>
+                  )}
                 </td>
                 <td>
                   <button
                     type="button"
                     className={`${styles.stock} ${p.inStock ? styles.stockIn : styles.stockOut}`}
-                    onClick={() => toggleStock(p.id)}
+                    onClick={() => void toggleStock(p.id)}
                   >
                     {p.inStock ? 'В наявності' : 'Немає'}
                   </button>
@@ -345,14 +459,14 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
           <button type="button" className={styles.pagBtn} disabled={safePage === 1} onClick={() => setPage(safePage - 1)}>
             <ArrowL />
           </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pg) => (
             <button
-              key={p}
+              key={pg}
               type="button"
-              className={`${styles.pagBtn} ${p === safePage ? styles.pagActive : ''}`}
-              onClick={() => setPage(p)}
+              className={`${styles.pagBtn} ${pg === safePage ? styles.pagActive : ''}`}
+              onClick={() => setPage(pg)}
             >
-              {p}
+              {pg}
             </button>
           ))}
           <button type="button" className={styles.pagBtn} disabled={safePage === totalPages} onClick={() => setPage(safePage + 1)}>
@@ -365,9 +479,9 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
         <ProductModal
           mode={modal.mode}
           initial={modalInitial}
-          categories={CATEGORIES}
+          categories={categories}
           vertical={vertical}
-          onSave={handleSave}
+          onSave={(data) => void handleSave(data)}
           onClose={() => setModal(null)}
         />
       )}
@@ -375,7 +489,7 @@ export default function AdminProductsClient({ vertical }: { vertical: Vertical }
       {deletingId && (
         <ConfirmDialog
           message={isRestaurant ? 'Видалити цю страву?' : 'Видалити цей товар?'}
-          onConfirm={doDelete}
+          onConfirm={() => void doDelete()}
           onCancel={() => setDeletingId(null)}
         />
       )}
