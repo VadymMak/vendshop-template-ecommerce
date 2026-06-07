@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useVerticalConfig } from '@/lib/vertical-context';
+import { useStorePresence } from '@/lib/presence-context';
 import styles from './HeroSection.module.css';
 
 interface DailySpecial {
@@ -44,16 +45,24 @@ export default function HeroSection({
   const t  = useTranslations('hero');
   const tf = useTranslations('heroFood');
   const vConfig = useVerticalConfig();
+  const presence = useStorePresence();
 
   // ── Food Market Hero ────────────────────────────────────────────
   if (vConfig.vertical === 'FOOD_MARKET') {
+    const badgeText =
+      presence.primaryMode === 'HYBRID'
+        ? tf('badgeHybrid')
+        : presence.primaryMode === 'PHYSICAL'
+        ? tf('badgePhysical')
+        : tf('badge');
+
     return (
       <section className={styles.heroFood} aria-label={storeName}>
         {/* Left content */}
         <div className={styles.foodContent}>
           <span className={styles.foodBadge}>
             <span className={styles.foodBadgeDot} />
-            {tf('badge')}
+            {badgeText}
           </span>
 
           <h1 className={styles.foodTitle}>
@@ -64,16 +73,38 @@ export default function HeroSection({
           <p className={styles.foodSubtitle}>{tf('subtitle')}</p>
 
           <div className={styles.foodButtons}>
-            <Link href="/catalog" className={styles.foodBtnPrimary}>
-              {tf('orderNow')} <span className={styles.foodArrow}>→</span>
-            </Link>
-            <Link href="/catalog" className={styles.foodBtnOutline}>
-              {tf('viewCatalog')}
-            </Link>
+            {presence.hasDelivery ? (
+              <Link href="/catalog" className={styles.foodBtnPrimary}>
+                {tf('orderNow')} <span className={styles.foodArrow}>→</span>
+              </Link>
+            ) : (
+              <Link href="/catalog" className={styles.foodBtnPrimary}>
+                {tf('viewCatalog')} <span className={styles.foodArrow}>→</span>
+              </Link>
+            )}
+            {presence.hasPhysicalLocation ? (
+              <Link href="#contacts" className={styles.foodBtnOutline}>
+                {tf('findUs')}
+              </Link>
+            ) : (
+              <Link href="/catalog" className={styles.foodBtnOutline}>
+                {tf('viewCatalog')}
+              </Link>
+            )}
           </div>
 
           <p className={styles.foodTrust}>
-            {tf('productCount')} · {tf('deliveryTime')} · {tf('freeFrom')}
+            {presence.hasPhysicalLocation && presence.address && (
+              <>📍 {presence.address}{presence.city ? `, ${presence.city}` : ''} &nbsp;·&nbsp;</>
+            )}
+            {presence.openingHours && (
+              <>🕐 {presence.openingHours} &nbsp;·&nbsp;</>
+            )}
+            {presence.hasDelivery
+              ? tf('deliveryTime')
+              : !presence.hasPhysicalLocation
+              ? tf('productCount')
+              : null}
           </p>
         </div>
 
@@ -90,14 +121,16 @@ export default function HeroSection({
             />
           </div>
 
-          {/* Floating: delivery time */}
-          <div className={`${styles.foodFloat} ${styles.foodFloatDelivery}`}>
-            <span className={styles.foodFloatIcon}>🚴</span>
-            <div>
-              <strong className={styles.foodFloatValue}>{avgDeliveryMin ?? 30} min</strong>
-              <span className={styles.foodFloatLabel}>{tf('avgDelivery')}</span>
+          {/* Floating: delivery time — only if hasDelivery */}
+          {presence.hasDelivery && (
+            <div className={`${styles.foodFloat} ${styles.foodFloatDelivery}`}>
+              <span className={styles.foodFloatIcon}>🚴</span>
+              <div>
+                <strong className={styles.foodFloatValue}>{avgDeliveryMin ?? 30} min</strong>
+                <span className={styles.foodFloatLabel}>{tf('avgDelivery')}</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Floating: rating */}
           <div className={`${styles.foodFloat} ${styles.foodFloatRating}`}>

@@ -355,6 +355,9 @@
   },
   "heroFood": {
     "badge": "Now delivering across Europe",
+    "badgeHybrid": "Fresh market · Also delivering",
+    "badgePhysical": "Fresh market · Open now",
+    "findUs": "Find us",
     "title": "Fresh food, delivered in",
     "titleAccent": "minutes.",
     "subtitle": "Farm-fresh produce, artisan goods, and everyday essentials from trusted European suppliers — delivered straight to your door.",

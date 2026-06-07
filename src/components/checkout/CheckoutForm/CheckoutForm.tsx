@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { useCartStore } from '@/stores/useCartStore';
 import { useVerticalConfig } from '@/lib/vertical-context';
+import { useStorePresence } from '@/lib/presence-context';
 import styles from './CheckoutForm.module.css';
 
 type DeliveryMethod = 'SHIPPING' | 'COURIER' | 'PICKUP' | 'DINE_IN';
@@ -138,6 +139,7 @@ export default function CheckoutForm() {
   const vConfig = useVerticalConfig();
 
   const isRestaurant = vConfig.vertical === 'RESTAURANT';
+  const presence = useStorePresence();
 
   const [data, setData] = useState<FormData>({
     firstName: '',
@@ -294,7 +296,14 @@ export default function CheckoutForm() {
                 onChange={() => set('deliveryMethod', card.value)}
               />
               <span className={styles.cardIcon}>{card.icon}</span>
-              <span className={styles.cardLabel}>{card.label}</span>
+              <span className={styles.cardLabel}>
+                {card.label}
+                {card.value === 'PICKUP' && presence.address && (
+                  <span className={styles.pickupAddress}>
+                    📍 {presence.address}{presence.city ? `, ${presence.city}` : ''}
+                  </span>
+                )}
+              </span>
             </label>
           ))}
         </div>

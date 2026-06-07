@@ -9,6 +9,7 @@ import Footer from '@/components/layout/Footer/Footer';
 import { getStoreConfig } from '@/lib/store-config';
 import { themeToCssVars } from '@/lib/theme';
 import { VerticalProvider } from '@/lib/vertical-context';
+import { PresenceProvider } from '@/lib/presence-context';
 import { getBaseUrl } from '@/lib/url';
 import '../../globals.css';
 
@@ -104,9 +105,11 @@ export default async function LocaleLayout({
       <body style={cssVars as React.CSSProperties}>
         <NextIntlClientProvider messages={messages}>
           <VerticalProvider config={config.vertical}>
-            <Header storeName={config.name} vertical={config.vertical.vertical} />
-            <main>{children}</main>
-            <Footer storeName={config.name} vertical={config.vertical.vertical} />
+            <PresenceProvider presence={config.presence}>
+              <Header storeName={config.name} vertical={config.vertical.vertical} />
+              <main>{children}</main>
+              <Footer storeName={config.name} vertical={config.vertical.vertical} />
+            </PresenceProvider>
           </VerticalProvider>
         </NextIntlClientProvider>
       </body>

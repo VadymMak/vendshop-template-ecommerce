@@ -224,3 +224,10 @@
 .formDark .submit:hover:not(:disabled) {
   background: var(--color-primary-dark);
 }
+
+.pickupAddress {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}

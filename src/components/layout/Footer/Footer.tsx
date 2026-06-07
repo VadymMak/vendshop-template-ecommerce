@@ -3,6 +3,7 @@
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useVerticalConfig } from '@/lib/vertical-context';
+import { useStorePresence } from '@/lib/presence-context';
 import type { Vertical } from '@prisma/client';
 import styles from './Footer.module.css';
 
@@ -81,6 +82,15 @@ function TruckIcon() {
   );
 }
 
+function MapPinIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" {...strokeProps} aria-hidden="true">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+      <circle cx="12" cy="9" r="2.5" />
+    </svg>
+  );
+}
+
 export default function Footer({
   storeName = 'Store',
   phone = '+38 (097) 123-45-67',
@@ -91,7 +101,10 @@ export default function Footer({
   const tc = useTranslations('categories');
   const tMenu = useTranslations('menuCategories');
   const vConfig = useVerticalConfig();
-  const telHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+  const presence = useStorePresence();
+  const displayPhone = presence.phone ?? phone;
+  const displayEmail = presence.email ?? email;
+  const telHref = `tel:${displayPhone.replace(/[^+\d]/g, '')}`;
   const isRestaurant = vertical === 'RESTAURANT';
 
   return (
@@ -173,22 +186,28 @@ export default function Footer({
             <li>
               <a className={styles.contactLink} href={telHref}>
                 <PhoneIcon />
-                {phone}
+                {displayPhone}
               </a>
             </li>
-            {email && (
+            {displayEmail && (
               <li>
-                <a className={styles.contactLink} href={`mailto:${email}`}>
+                <a className={styles.contactLink} href={`mailto:${displayEmail}`}>
                   <MailIcon />
-                  {email}
+                  {displayEmail}
                 </a>
+              </li>
+            )}
+            {presence.hasPhysicalLocation && presence.address && (
+              <li className={styles.contactItem}>
+                <MapPinIcon />
+                {presence.address}{presence.city ? `, ${presence.city}` : ''}
               </li>
             )}
             <li className={styles.contactItem}>
               <ClockIcon />
-              {t('schedule')}
+              {presence.openingHours ?? t('schedule')}
             </li>
-            {!isRestaurant && (
+            {!isRestaurant && !presence.hasPhysicalLocation && (
               <li className={styles.contactItem}>
                 <TruckIcon />
                 {t('deliveryNova')}

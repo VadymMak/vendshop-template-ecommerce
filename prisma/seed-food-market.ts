@@ -14,12 +14,30 @@ async function main() {
   // ============ STORE ============
   const store = await db.store.upsert({
     where: { slug: 'krajina' },
-    update: {},
+    update: {
+      primaryMode: 'HYBRID',
+      address: 'Marktstraße 15',
+      city: 'Berlin',
+      openingHours: 'Mon-Sat 7:00-20:00',
+      phone: '+49 30 1234 5678',
+      email: 'hello@krajina.eu',
+      mapLat: 52.5200,
+      mapLng: 13.4050,
+      regionBundle: 'EU',
+    },
     create: {
       name: 'Krajina Fresh Market',
       slug: 'krajina',
       vertical: Vertical.FOOD_MARKET,
-      regionBundle: 'UA',
+      primaryMode: 'HYBRID',
+      address: 'Marktstraße 15',
+      city: 'Berlin',
+      openingHours: 'Mon-Sat 7:00-20:00',
+      phone: '+49 30 1234 5678',
+      email: 'hello@krajina.eu',
+      mapLat: 52.5200,
+      mapLng: 13.4050,
+      regionBundle: 'EU',
       themeConfig: {
         colors: {
           bg:             '#fafaf5',

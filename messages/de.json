@@ -355,6 +355,9 @@
   },
   "heroFood": {
     "badge": "Jetzt europaweit liefern",
+    "badgeHybrid": "Frischmarkt · Auch mit Lieferung",
+    "badgePhysical": "Frischmarkt · Jetzt geöffnet",
+    "findUs": "Finden Sie uns",
     "title": "Frische Lebensmittel, geliefert in",
     "titleAccent": "Minuten.",
     "subtitle": "Frische Produkte vom Bauernhof, handwerkliche Waren und tägliche Essentials von vertrauenswürdigen europäischen Lieferanten — direkt an Ihre Tür.",

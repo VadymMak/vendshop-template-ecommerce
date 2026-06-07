@@ -355,6 +355,9 @@
   },
   "heroFood": {
     "badge": "Doručujeme po celej Európe",
+    "badgeHybrid": "Čerstvý trh · Aj s doručením",
+    "badgePhysical": "Čerstvý trh · Práve otvorené",
+    "findUs": "Nájdite nás",
     "title": "Čerstvé potraviny, doručené za",
     "titleAccent": "minúty.",
     "subtitle": "Čerstvé produkty z farmy, remeselné výrobky a denné potreby od dôveryhodných európskych dodávateľov — priamo k vašim dverám.",

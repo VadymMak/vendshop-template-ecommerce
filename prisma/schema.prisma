@@ -15,6 +15,16 @@ model Store {
   vertical     Vertical @default(ECOMMERCE)
   regionBundle String   @default("UA")
 
+  // ── Store Presence ──
+  primaryMode  StoreMode @default(ONLINE)
+  address      String?
+  city         String?
+  openingHours String?
+  phone        String?
+  email        String?
+  mapLat       Float?
+  mapLng       Float?
+
   themeConfig Json?
   metadata    Json?
 
@@ -38,6 +48,12 @@ enum Vertical {
   FOOD_MARKET
   RESTAURANT
   B2B
+}
+
+enum StoreMode {
+  PHYSICAL
+  ONLINE
+  HYBRID
 }
 
 // ============ PRODUCTS ============
