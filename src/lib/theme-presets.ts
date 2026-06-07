@@ -164,4 +164,30 @@ export const THEME_PRESETS: ThemePreset[] = [
       },
     },
   },
+  {
+    id: 'restaurant',
+    name: 'Restaurant',
+    description: 'Елегантний ресторанний стиль',
+    theme: {
+      colors: {
+        bg: '#0a0a0a',
+        primary: '#d4a853',
+        primaryDark: '#b8922e',
+        primaryLight: '#1a1505',
+        text: '#f5f5f5',
+        textSecondary: '#cbd5e1',
+        textMuted: '#9ca3af',
+        border: '#222222',
+        bgSubtle: '#1a1a1a',
+        success: '#4ade80',
+        error: '#ef4444',
+      },
+      layout: {
+        heroType: 'full-width',
+        cardStyle: 'border',
+        navPosition: 'top',
+        borderRadius: 'rounded',
+      },
+    },
+  },
 ];

@@ -1,5 +1,5 @@
 .section {
-  background: #0a0a0a;
+  background: var(--color-bg);
   padding: 80px 0;
 }
 
@@ -17,7 +17,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 3px;
-  color: #d4a853;
+  color: var(--color-primary);
   text-transform: uppercase;
   margin: 0;
 }
@@ -33,7 +33,7 @@
 
 .subtitle {
   font-size: 1rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin: 0;
   max-width: 480px;
   margin-inline: auto;
@@ -52,7 +52,7 @@
 
 /* ── Card ── */
 .card {
-  background: #1a1a1a;
+  background: var(--color-bg-subtle);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
@@ -93,8 +93,8 @@
   white-space: nowrap;
 }
 
-.badgeChef    { color: #d4a853; }
-.badgePopular { color: #ef4444; }
+.badgeChef    { color: var(--color-primary); }
+.badgePopular { color: var(--color-error); }
 .badgeNew     { color: #a78bfa; }
 
 /* ── Card body ── */
@@ -115,7 +115,7 @@
 
 .dishDesc {
   font-size: 0.875rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin: 0;
   line-height: 1.5;
   display: -webkit-box;
@@ -135,11 +135,11 @@
 .price {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #d4a853;
+  color: var(--color-primary);
 }
 
 .orderBtn {
-  background: #b91c1c;
+  background: var(--color-primary);
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -152,14 +152,14 @@
 }
 
 .orderBtn:hover {
-  background: #991b1b;
+  background: var(--color-primary-dark);
 }
 
 /* ── Updated note ── */
 .updatedNote {
   text-align: center;
   margin-top: 40px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-style: italic;
   font-size: 0.875rem;
   padding: 0 24px;

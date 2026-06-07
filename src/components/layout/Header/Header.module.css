@@ -391,7 +391,7 @@
 }
 
 .restaurantNav a:hover {
-  color: #d4a853;
+  color: var(--color-primary);
 }
 
 .restaurantActions {
@@ -412,7 +412,7 @@
 }
 
 .restaurantPhone:hover {
-  color: #d4a853;
+  color: var(--color-primary);
 }
 
 .restaurantBurger {
@@ -466,6 +466,6 @@
   }
 
   .restaurantMobileMenu a:hover {
-    color: #d4a853;
+    color: var(--color-primary);
   }
 }

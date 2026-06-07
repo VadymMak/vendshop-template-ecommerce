@@ -202,10 +202,10 @@
 
 /* ── Restaurant dark ── */
 .cartDark {
-  background: #0a0a0a;
+  background: var(--color-bg);
   min-height: 100vh;
   padding-top: 90px;
 }
 .cartDark .h1 {
-  color: #f5f5f5;
+  color: var(--color-text);
 }

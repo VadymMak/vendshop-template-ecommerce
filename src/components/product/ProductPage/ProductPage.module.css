@@ -402,15 +402,15 @@
 
 /* ── Restaurant dark theme ── */
 .pageDark {
-  background: #0a0a0a;
-  color: #f5f5f5;
+  background: var(--color-bg);
+  color: var(--color-text);
   min-height: 100vh;
   padding-top: 90px;
 }
 
 .nameDark {
   font-family: var(--font-playfair), Georgia, serif;
-  color: #f5f5f5;
+  color: var(--color-text);
 }
 
 .dishMeta {
@@ -428,12 +428,12 @@
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-size: 13px;
 }
 
 .metaTagGreen {
-  color: #4ade80;
+  color: var(--color-success);
   border-color: rgba(74, 222, 128, 0.2);
 }
 
@@ -448,16 +448,16 @@
 }
 
 .priceBlockDark .priceNew {
-  color: #d4a853;
+  color: var(--color-primary);
 }
 
 .addCartDark {
-  background: #b91c1c;
+  background: var(--color-primary);
   color: #ffffff;
   width: 100%;
 }
 .addCartDark:hover:not(:disabled) {
-  background: #991b1b;
+  background: var(--color-primary-dark);
 }
 
 .deliveryDark {
@@ -470,5 +470,5 @@
   border-color: rgba(255, 255, 255, 0.06);
 }
 .deliveryDark .deliveryText b {
-  color: #d4a853;
+  color: var(--color-primary);
 }

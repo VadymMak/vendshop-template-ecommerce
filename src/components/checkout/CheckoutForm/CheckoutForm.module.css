@@ -181,23 +181,23 @@
 
 /* ── Restaurant dark theme ── */
 .formDark .sectionTitle {
-  color: #f5f5f5;
+  color: var(--color-text);
 }
 
 .formDark .label {
-  color: #d1d5db;
+  color: var(--color-text-secondary);
 }
 
 .formDark .input,
 .formDark .textarea {
-  background: #1a1a1a;
+  background: var(--color-bg-subtle);
   border-color: rgba(255, 255, 255, 0.1);
-  color: #f5f5f5;
+  color: var(--color-text);
 }
 
 .formDark .input:focus,
 .formDark .textarea:focus {
-  border-color: #d4a853;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.15);
 }
 
@@ -207,20 +207,20 @@
 }
 
 .formDark .card {
-  background: #1a1a1a;
+  background: var(--color-bg-subtle);
   border-color: rgba(255, 255, 255, 0.08);
-  color: #d1d5db;
+  color: var(--color-text-secondary);
 }
 
 .formDark .cardActive {
-  border-color: #d4a853;
+  border-color: var(--color-primary);
   background: rgba(212, 168, 83, 0.08);
-  color: #f5f5f5;
+  color: var(--color-text);
 }
 
 .formDark .submit {
-  background: #b91c1c;
+  background: var(--color-primary);
 }
 .formDark .submit:hover:not(:disabled) {
-  background: #991b1b;
+  background: var(--color-primary-dark);
 }

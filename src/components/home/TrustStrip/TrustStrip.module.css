@@ -71,20 +71,20 @@
 
 /* ── Restaurant / dark variant ── */
 .sectionDark {
-  background: #111;
+  background: var(--color-bg);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sectionDark .icon {
   background: rgba(212, 168, 83, 0.1);
-  color: #d4a853;
+  color: var(--color-primary);
 }
 
 .sectionDark .title {
-  color: #f5f5f5;
+  color: var(--color-text);
 }
 
 .sectionDark .desc {
-  color: #9ca3af;
+  color: var(--color-text-muted);
 }
