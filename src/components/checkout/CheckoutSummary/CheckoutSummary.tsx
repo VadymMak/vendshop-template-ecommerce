@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useCartStore } from '@/stores/useCartStore';
 import { useVerticalConfig } from '@/lib/vertical-context';
@@ -47,8 +48,14 @@ export default function CheckoutSummary() {
         {shown.map((it) => (
           <li key={it.id} className={styles.item}>
             <span className={styles.itemImg}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={it.image} alt={it.name} loading="lazy" />
+              <Image
+                src={it.image}
+                alt={it.name}
+                width={60}
+                height={60}
+                className={styles.itemThumb}
+                unoptimized={it.image.endsWith('.svg')}
+              />
             </span>
             <span className={styles.itemInfo}>
               <span className={styles.itemName}>{it.name}</span>

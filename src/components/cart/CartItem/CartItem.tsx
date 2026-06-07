@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import styles from './CartItem.module.css';
@@ -84,8 +85,14 @@ export default function CartItem({ item, onQuantityChange, onDelete, onCheck }: 
       </label>
 
       <Link href={href} className={styles.img} aria-label={item.name}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={item.image} alt={item.name} loading="lazy" />
+        <Image
+          src={item.image}
+          alt={item.name}
+          width={80}
+          height={80}
+          className={styles.itemImage}
+          unoptimized={item.image.endsWith('.svg')}
+        />
       </Link>
 
       <div className={styles.info}>

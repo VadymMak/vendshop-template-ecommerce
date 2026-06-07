@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from './ImageGallery.module.css';
 
 const PLACEHOLDER = '/placeholder-product.svg';
@@ -20,8 +21,15 @@ export default function ImageGallery({ images, alt }: ImageGalleryProps) {
   return (
     <div className={styles.gallery}>
       <div className={styles.main}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.mainImg} src={main} alt={alt} />
+        <Image
+          className={styles.mainImg}
+          src={main}
+          alt={alt}
+          width={600}
+          height={400}
+          priority
+          unoptimized={main.endsWith('.svg')}
+        />
       </div>
       <div className={styles.thumbs}>
         {thumbs.map((src, i) => (
@@ -33,8 +41,14 @@ export default function ImageGallery({ images, alt }: ImageGalleryProps) {
             aria-pressed={i === active}
             aria-label={`${alt} ${i + 1}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.thumbImg} src={src} alt="" />
+            <Image
+              className={styles.thumbImg}
+              src={src}
+              alt=""
+              width={80}
+              height={80}
+              unoptimized={src.endsWith('.svg')}
+            />
           </button>
         ))}
       </div>

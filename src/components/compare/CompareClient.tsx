@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useCompareStore } from '@/stores/useCompareStore';
@@ -47,8 +48,14 @@ export default function CompareClient() {
                 {items.map((item) => (
                   <th key={item.id} className={styles.prodCol}>
                     <div className={styles.prodHeader}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={item.image} alt={item.name} className={styles.prodImg} />
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={200}
+                        height={200}
+                        className={styles.prodImg}
+                        unoptimized={item.image.endsWith('.svg')}
+                      />
                       <Link href={`/product/${item.slug}`} className={styles.prodName}>
                         {item.name}
                       </Link>

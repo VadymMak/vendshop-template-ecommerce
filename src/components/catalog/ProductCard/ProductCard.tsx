@@ -1,6 +1,7 @@
 'use client';
 
 import { type CSSProperties } from 'react';
+import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCartStore } from '@/stores/useCartStore';
@@ -185,12 +186,13 @@ export default function ProductCard({
         </button>
 
         <Link className={styles.imageLink} href={href} aria-label={name}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             className={isPlaceholder ? styles.image : styles.imageReal}
             src={effectiveImage}
             alt={name}
-            loading="lazy"
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            unoptimized={effectiveImage.endsWith('.svg')}
           />
         </Link>
       </div>

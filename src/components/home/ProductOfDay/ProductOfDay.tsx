@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import styles from './ProductOfDay.module.css';
 
@@ -111,8 +112,14 @@ export default function ProductOfDay({ product, onAddToCart }: ProductOfDayProps
 
         <div className={styles.media}>
           {discount != null && <span className={styles.disc}>-{discount}%</span>}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.image} src={product.image} alt={product.name} loading="lazy" />
+          <Image
+            className={styles.image}
+            src={product.image}
+            alt={product.name}
+            width={300}
+            height={300}
+            unoptimized={product.image.endsWith('.svg')}
+          />
         </div>
 
         <div>

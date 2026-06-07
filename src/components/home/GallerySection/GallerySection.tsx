@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import styles from './GallerySection.module.css';
 
@@ -41,8 +42,13 @@ export default function GallerySection() {
         <div className={styles.grid}>
           {images.map((img) => (
             <div key={img.id} className={styles.item}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt={img.alt} className={styles.realImage} />
+              <Image
+                src={img.url}
+                alt={img.alt}
+                className={styles.realImage}
+                fill
+                sizes="(max-width: 640px) 100vw, 33vw"
+              />
             </div>
           ))}
         </div>
