@@ -66,11 +66,22 @@ export default function HeroSection({
           </span>
 
           <h1 className={styles.foodTitle}>
-            {tf('title')}{' '}
-            <span className={styles.foodTitleAccent}>{tf('titleAccent')}</span>
+            {presence.primaryMode === 'HYBRID' ? (
+              <>{tf('titleHybrid')}{' '}<span className={styles.foodTitleAccent}>{tf('titleHybridAccent')}</span></>
+            ) : presence.primaryMode === 'PHYSICAL' ? (
+              <>{tf('titlePhysical')}{' '}<span className={styles.foodTitleAccent}>{tf('titlePhysicalAccent')}</span></>
+            ) : (
+              <>{tf('title')}{' '}<span className={styles.foodTitleAccent}>{tf('titleAccent')}</span></>
+            )}
           </h1>
 
-          <p className={styles.foodSubtitle}>{tf('subtitle')}</p>
+          <p className={styles.foodSubtitle}>
+            {presence.primaryMode === 'HYBRID'
+              ? tf('subtitleHybrid')
+              : presence.primaryMode === 'PHYSICAL'
+              ? tf('subtitlePhysical')
+              : tf('subtitle')}
+          </p>
 
           <div className={styles.foodButtons}>
             {presence.hasDelivery ? (
