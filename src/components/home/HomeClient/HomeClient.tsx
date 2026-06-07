@@ -51,6 +51,7 @@ interface HomeClientProps {
   menuCategories?: MenuCategoryItem[];
   dailySpecials?: DailySpecialItem[];
   deliveryZones?: ZoneData[];
+  foodCategories?: { slug: string; nameKey: string; productCount: number }[];
 }
 
 // Module-level constant: countdown target is fixed for the session duration.
@@ -59,7 +60,7 @@ const ENDS_AT = new Date(Date.now() + ((2 * 24 + 14) * 3600 + 37 * 60 + 22) * 10
 const noop = (_id: string) => {};
 const noopStr = (_s: string) => {};
 
-export default function HomeClient({ products, productOfDay, storeName, menuCategories, dailySpecials, deliveryZones }: HomeClientProps) {
+export default function HomeClient({ products, productOfDay, storeName, menuCategories, dailySpecials, deliveryZones, foodCategories }: HomeClientProps) {
   const vConfig = useVerticalConfig();
   const sections = vConfig.ui.homeSections;
 
@@ -75,6 +76,16 @@ export default function HomeClient({ products, productOfDay, storeName, menuCate
       {sections.map((section) => {
         switch (section) {
           case 'categories':
+            if (vConfig.vertical === 'FOOD_MARKET') {
+              return (
+                <CategoriesGrid
+                  key={section}
+                  onCategoryClick={noopStr}
+                  categories={foodCategories}
+                  storeName={storeName}
+                />
+              );
+            }
             return <CategoriesGrid key={section} onCategoryClick={noopStr} />;
 
           case 'bestsellers':

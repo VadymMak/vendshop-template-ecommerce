@@ -74,14 +74,14 @@ async function main() {
 
   // ============ CATEGORIES ============
   const categoryData = [
-    { slug: 'fruits',     nameKey: 'Фрукти',      sortOrder: 1 },
-    { slug: 'vegetables', nameKey: 'Овочі',        sortOrder: 2 },
-    { slug: 'dairy',      nameKey: 'Молочне',      sortOrder: 3 },
-    { slug: 'meat',       nameKey: 'М\'ясо',       sortOrder: 4 },
-    { slug: 'bakery',     nameKey: 'Випічка',      sortOrder: 5 },
-    { slug: 'drinks',     nameKey: 'Напої',        sortOrder: 6 },
-    { slug: 'frozen',     nameKey: 'Заморожене',   sortOrder: 7 },
-    { slug: 'grocery',    nameKey: 'Бакалія',      sortOrder: 8 },
+    { slug: 'fruits',     nameKey: 'fruits',     sortOrder: 1 },
+    { slug: 'vegetables', nameKey: 'vegetables',  sortOrder: 2 },
+    { slug: 'dairy',      nameKey: 'dairy',       sortOrder: 3 },
+    { slug: 'meat',       nameKey: 'meat',        sortOrder: 4 },
+    { slug: 'bakery',     nameKey: 'bakery',      sortOrder: 5 },
+    { slug: 'drinks',     nameKey: 'drinks',      sortOrder: 6 },
+    { slug: 'frozen',     nameKey: 'frozen',      sortOrder: 7 },
+    { slug: 'grocery',    nameKey: 'grocery',     sortOrder: 8 },
   ];
 
   const categories: Record<string, string> = {};

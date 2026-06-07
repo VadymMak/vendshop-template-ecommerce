@@ -3,7 +3,10 @@
 import type { ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useVerticalConfig } from '@/lib/vertical-context';
 import styles from './CategoriesGrid.module.css';
+
+// ── ECOMMERCE: power-tool categories ────────────────────────────
 
 /** Stable identifiers for each category — also the translation keys under `categories`. */
 export type CategoryId =
@@ -16,15 +19,6 @@ export type CategoryId =
   | 'measuring'
   | 'accessories';
 
-export interface CategoriesGridProps {
-  /** Invoked with the category id when a card is activated. */
-  onCategoryClick?: (categoryId: CategoryId) => void;
-}
-
-/**
- * The eight power-tool categories, in display order (4×2 grid).
- * Icons are inline stroke SVGs; colour comes from CSS (`currentColor`).
- */
 const CATEGORIES: { id: CategoryId; icon: ReactNode }[] = [
   {
     id: 'drills',
@@ -109,9 +103,88 @@ const CATEGORIES: { id: CategoryId; icon: ReactNode }[] = [
   },
 ];
 
-export default function CategoriesGrid({ onCategoryClick }: CategoriesGridProps) {
-  const t = useTranslations('categories');
+// ── FOOD MARKET: emoji + color-coded cards ───────────────────────
 
+export interface CategoryData {
+  slug: string;
+  nameKey: string;
+  productCount: number;
+}
+
+const FOOD_CATEGORY_CONFIG: Record<string, { emoji: string; bgClass: string }> = {
+  fruits:     { emoji: '🍓', bgClass: 'foodCatPink' },
+  vegetables: { emoji: '🥦', bgClass: 'foodCatGreen' },
+  dairy:      { emoji: '🧀', bgClass: 'foodCatBlue' },
+  bakery:     { emoji: '🥖', bgClass: 'foodCatYellow' },
+  meat:       { emoji: '🐟', bgClass: 'foodCatSalmon' },
+  drinks:     { emoji: '🧃', bgClass: 'foodCatCyan' },
+  frozen:     { emoji: '🍫', bgClass: 'foodCatLavender' },
+  grocery:    { emoji: '🌱', bgClass: 'foodCatMint' },
+};
+
+// ── Props ────────────────────────────────────────────────────────
+
+export interface CategoriesGridProps {
+  onCategoryClick?: (categoryId: string) => void;
+  categories?: CategoryData[];
+  storeName?: string;
+}
+
+// ── Component ────────────────────────────────────────────────────
+
+export default function CategoriesGrid({ onCategoryClick, categories, storeName }: CategoriesGridProps) {
+  const t = useTranslations('categories');
+  const vConfig = useVerticalConfig();
+
+  // ── Food Market ─────────────────────────────────────────────────
+  if (vConfig.vertical === 'FOOD_MARKET') {
+    return (
+      <section className={styles.foodCatSection}>
+        <div className={styles.foodCatInner}>
+          <div className={styles.foodCatHeader}>
+            <div>
+              <p className={styles.foodCatLabel}>
+                <span className={styles.foodCatLabelLine} />
+                {storeName}
+              </p>
+              <h2 className={styles.foodCatTitle}>{t('shopByCategory')}</h2>
+              <p className={styles.foodCatSubtitle}>{t('findWhatYouNeed')}</p>
+            </div>
+            <Link href="/catalog" className={styles.foodCatBrowse}>
+              {t('browseAll')} <span>→</span>
+            </Link>
+          </div>
+
+          <ul className={styles.foodCatGrid}>
+            {(categories ?? []).map((cat) => {
+              const config = FOOD_CATEGORY_CONFIG[cat.slug];
+              return (
+                <li key={cat.slug}>
+                  <Link
+                    href={`/catalog?category=${cat.slug}`}
+                    className={`${styles.foodCatCard} ${config ? styles[config.bgClass as keyof typeof styles] : ''}`}
+                    onClick={() => onCategoryClick?.(cat.slug)}
+                  >
+                    <span className={styles.foodCatEmoji} aria-hidden="true">
+                      <span className={styles.foodCatEmojiCircle}>
+                        {config?.emoji ?? '📦'}
+                      </span>
+                    </span>
+                    <span className={styles.foodCatName}>{t(cat.nameKey as Parameters<typeof t>[0])}</span>
+                    <span className={styles.foodCatCount}>
+                      {t('productsCount', { count: cat.productCount })}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    );
+  }
+
+  // ── ECOMMERCE: power-tool grid (unchanged) ───────────────────────
   return (
     <section className={styles.section} aria-label={t('title')}>
       <div className={styles.inner}>

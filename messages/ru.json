@@ -31,14 +31,18 @@
     "pizza": "Пицца",
     "dolci": "Десерты",
     "bevande": "Напитки",
-    "fruits": "Фрукты",
+    "fruits": "Фрукты и ягоды",
     "vegetables": "Овощи",
-    "dairy": "Молочное",
-    "meat": "Мясо",
+    "dairy": "Молочное и яйца",
+    "meat": "Мясо и рыба",
     "bakery": "Выпечка",
     "drinks": "Напитки",
     "frozen": "Замороженное",
-    "grocery": "Бакалея"
+    "grocery": "Бакалея",
+    "shopByCategory": "Покупайте по категории",
+    "findWhatYouNeed": "Найдите именно то, что нужно",
+    "browseAll": "Смотреть все",
+    "productsCount": "{count}+ товаров"
   },
   "product": {
     "addToCart": "В корзину",

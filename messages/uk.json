@@ -31,14 +31,18 @@
     "pizza": "Піца",
     "dolci": "Десерти",
     "bevande": "Напої",
-    "fruits": "Фрукти",
+    "fruits": "Фрукти та ягоди",
     "vegetables": "Овочі",
-    "dairy": "Молочне",
-    "meat": "М'ясо",
+    "dairy": "Молочне та яйця",
+    "meat": "М'ясо та риба",
     "bakery": "Випічка",
     "drinks": "Напої",
     "frozen": "Заморожене",
-    "grocery": "Бакалія"
+    "grocery": "Бакалія",
+    "shopByCategory": "Купуйте за категорією",
+    "findWhatYouNeed": "Знайдіть саме те, що потрібно",
+    "browseAll": "Переглянути все",
+    "productsCount": "{count}+ товарів"
   },
   "product": {
     "addToCart": "До кошика",

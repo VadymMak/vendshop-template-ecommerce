@@ -105,6 +105,22 @@ export default async function HomePage({
     stockLeft: 7,
   };
 
+  // Fetch categories with product count (for food market categories grid)
+  const isFoodMarket = store.vertical === 'FOOD_MARKET';
+  const dbFoodCategories = isFoodMarket
+    ? await db.category.findMany({
+        where: { storeId: store.id },
+        include: { _count: { select: { products: true } } },
+        orderBy: { sortOrder: 'asc' },
+      })
+    : [];
+
+  const foodCategories = dbFoodCategories.map((c) => ({
+    slug: c.slug,
+    nameKey: c.nameKey,
+    productCount: c._count.products,
+  }));
+
   const isRestaurant = store.vertical === 'RESTAURANT';
   const baseUrl = getBaseUrl();
   const storeMeta = (store.metadata ?? {}) as Record<string, unknown>;
@@ -174,6 +190,7 @@ export default async function HomePage({
         menuCategories={menuCategories.length > 0 ? menuCategories : undefined}
         dailySpecials={dailySpecials.length > 0 ? dailySpecials : undefined}
         deliveryZones={deliveryZones.length > 0 ? deliveryZones : undefined}
+        foodCategories={foodCategories.length > 0 ? foodCategories : undefined}
       />
     </>
   );

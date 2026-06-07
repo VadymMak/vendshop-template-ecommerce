@@ -31,14 +31,18 @@
     "pizza": "Pizza",
     "dolci": "Dezerty",
     "bevande": "Nápoje",
-    "fruits": "Ovocie",
+    "fruits": "Ovocie a bobule",
     "vegetables": "Zelenina",
-    "dairy": "Mliečne výrobky",
-    "meat": "Mäso",
+    "dairy": "Mliečne a vajcia",
+    "meat": "Mäso a ryby",
     "bakery": "Pečivo",
     "drinks": "Nápoje",
     "frozen": "Mrazené",
-    "grocery": "Potraviny"
+    "grocery": "Potraviny",
+    "shopByCategory": "Nakupujte podľa kategórie",
+    "findWhatYouNeed": "Nájdite presne to, čo potrebujete",
+    "browseAll": "Zobraziť všetko",
+    "productsCount": "{count}+ produktov"
   },
   "product": {
     "addToCart": "Do košíka",

@@ -31,14 +31,18 @@
     "pizza": "Pizza",
     "dolci": "Desserts",
     "bevande": "Getränke",
-    "fruits": "Obst",
+    "fruits": "Obst & Beeren",
     "vegetables": "Gemüse",
-    "dairy": "Milchprodukte",
-    "meat": "Fleisch",
-    "bakery": "Backwaren",
+    "dairy": "Milch & Eier",
+    "meat": "Fleisch & Fisch",
+    "bakery": "Bäckerei",
     "drinks": "Getränke",
     "frozen": "Tiefkühlkost",
-    "grocery": "Lebensmittel"
+    "grocery": "Lebensmittel",
+    "shopByCategory": "Nach Kategorie einkaufen",
+    "findWhatYouNeed": "Finden Sie genau was Sie brauchen",
+    "browseAll": "Alle ansehen",
+    "productsCount": "{count}+ Produkte"
   },
   "product": {
     "addToCart": "In den Warenkorb",
