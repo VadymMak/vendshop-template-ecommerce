@@ -59,7 +59,13 @@
     "dress-shoes": "Spoločenské",
     "sport": "Športové",
     "kids": "Detské",
-    "sale": "Výpredaj"
+    "sale": "Výpredaj",
+    "industrial": "Priemysel",
+    "office": "Kancelárske potreby",
+    "electronics": "Elektronika",
+    "raw-materials": "Suroviny",
+    "packaging": "Obaly",
+    "services": "Služby"
   },
   "product": {
     "addToCart": "Do košíka",
@@ -159,7 +165,13 @@
     "termsLink": "Podmienky používania",
     "aboutDescFood": "Čerstvé potraviny, miestne produkty a denné potreby — doručené alebo pripravené na vyzdvihnutie.",
     "freshGuarantee": "Garancia čerstvosti",
-    "openingHours": "Otváracie hodiny"
+    "openingHours": "Otváracie hodiny",
+    "aboutDescShoe": "Online obchod s prémiovou obuvou od popredných svetových značiek. Tenisky, čižmy, spoločenská obuv a ďalšie.",
+    "aboutDescB2B": "Veľkoobchodná platforma pre podnikateľské potreby, priemyselné vybavenie a profesionálne riešenia.",
+    "sizeGuide": "Tabuľka veľkostí",
+    "wholesale": "Veľkoobchodné podmienky",
+    "deliveryEU": "Rýchle doručenie po celej EÚ",
+    "deliveryB2B": "Hromadné objednávky a individuálna dodávka"
   },
   "tags": {
     "popularQueries": "Obľúbené vyhľadávania:"

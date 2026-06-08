@@ -59,7 +59,13 @@
     "dress-shoes": "Dress Shoes",
     "sport": "Sport",
     "kids": "Kids",
-    "sale": "Sale"
+    "sale": "Sale",
+    "industrial": "Industrial",
+    "office": "Office Supplies",
+    "electronics": "Electronics",
+    "raw-materials": "Raw Materials",
+    "packaging": "Packaging",
+    "services": "Services"
   },
   "product": {
     "addToCart": "Add to cart",
@@ -159,7 +165,13 @@
     "termsLink": "Terms & Conditions",
     "aboutDescFood": "Fresh groceries, local produce, and daily essentials delivered to your door or ready for pickup.",
     "freshGuarantee": "Freshness Guarantee",
-    "openingHours": "Opening hours"
+    "openingHours": "Opening hours",
+    "aboutDescShoe": "Online store of premium footwear from the world's leading brands. Sneakers, boots, dress shoes and more.",
+    "aboutDescB2B": "Wholesale platform for business supplies, industrial equipment, and professional solutions.",
+    "sizeGuide": "Size Guide",
+    "wholesale": "Wholesale Terms",
+    "deliveryEU": "Fast EU-wide shipping",
+    "deliveryB2B": "Bulk orders & custom delivery"
   },
   "tags": {
     "popularQueries": "Popular searches:"

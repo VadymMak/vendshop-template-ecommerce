@@ -59,7 +59,13 @@
     "dress-shoes": "Elegante Schuhe",
     "sport": "Sportschuhe",
     "kids": "Kinderschuhe",
-    "sale": "Sale"
+    "sale": "Sale",
+    "industrial": "Industrie",
+    "office": "Bürobedarf",
+    "electronics": "Elektronik",
+    "raw-materials": "Rohstoffe",
+    "packaging": "Verpackung",
+    "services": "Dienstleistungen"
   },
   "product": {
     "addToCart": "In den Warenkorb",
@@ -159,7 +165,13 @@
     "termsLink": "AGB",
     "aboutDescFood": "Frische Lebensmittel, lokale Produkte und täglicher Bedarf — geliefert oder zur Abholung bereit.",
     "freshGuarantee": "Frischegarantie",
-    "openingHours": "Öffnungszeiten"
+    "openingHours": "Öffnungszeiten",
+    "aboutDescShoe": "Online-Shop für Premium-Schuhe der weltweit führenden Marken. Sneakers, Stiefel, Businessschuhe und mehr.",
+    "aboutDescB2B": "Großhandelsplattform für Geschäftsbedarf, Industrieausrüstung und professionelle Lösungen.",
+    "sizeGuide": "Größentabelle",
+    "wholesale": "Großhandelsbedingungen",
+    "deliveryEU": "Schneller EU-weiter Versand",
+    "deliveryB2B": "Großbestellungen & individuelle Lieferung"
   },
   "tags": {
     "popularQueries": "Beliebte Suchanfragen:"

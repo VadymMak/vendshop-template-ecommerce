@@ -50,6 +50,26 @@ const FOOD_MARKET_CATEGORIES = [
   'grocery',
 ] as const;
 
+const SHOE_MARKET_CATEGORIES = [
+  'sneakers',
+  'running',
+  'boots',
+  'sandals',
+  'dress-shoes',
+  'sport',
+  'kids',
+  'sale',
+] as const;
+
+const B2B_CATEGORIES = [
+  'industrial',
+  'office',
+  'electronics',
+  'raw-materials',
+  'packaging',
+  'services',
+] as const;
+
 const strokeProps = {
   fill: 'none',
   stroke: 'currentColor',
@@ -120,6 +140,8 @@ export default function Footer({
   const effectiveVertical = vertical ?? vConfig.vertical;
   const isRestaurant = effectiveVertical === 'RESTAURANT';
   const isFoodMarket = effectiveVertical === 'FOOD_MARKET';
+  const isShoeMarket = effectiveVertical === 'SHOE_MARKET';
+  const isB2B = effectiveVertical === 'B2B';
   const isDark = isRestaurant;
 
   return (
@@ -134,7 +156,15 @@ export default function Footer({
             <span className={styles.logoText}>{storeName}</span>
           </a>
           <p className={styles.aboutDesc}>
-            {isRestaurant ? t('aboutDescRestaurant') : isFoodMarket ? t('aboutDescFood') : t('aboutDesc')}
+            {isRestaurant
+              ? t('aboutDescRestaurant')
+              : isFoodMarket
+                ? t('aboutDescFood')
+                : isShoeMarket
+                  ? t('aboutDescShoe')
+                  : isB2B
+                    ? t('aboutDescB2B')
+                    : t('aboutDesc')}
           </p>
           {(presence.openingHours || (!isRestaurant && !isFoodMarket)) && (
             <p className={styles.schedule}>
@@ -164,6 +194,36 @@ export default function Footer({
                   </Link>
                 </li>
                 {FOOD_MARKET_CATEGORIES.map((cat) => (
+                  <li key={cat}>
+                    <Link className={styles.link} href={`/catalog?category=${cat}`}>
+                      {tc(cat)}
+                    </Link>
+                  </li>
+                ))}
+              </>
+            ) : isShoeMarket ? (
+              <>
+                <li>
+                  <Link className={styles.link} href="/catalog">
+                    {t('allCategories')}
+                  </Link>
+                </li>
+                {SHOE_MARKET_CATEGORIES.map((cat) => (
+                  <li key={cat}>
+                    <Link className={styles.link} href={`/catalog?category=${cat}`}>
+                      {tc(cat)}
+                    </Link>
+                  </li>
+                ))}
+              </>
+            ) : isB2B ? (
+              <>
+                <li>
+                  <Link className={styles.link} href="/catalog">
+                    {t('allCategories')}
+                  </Link>
+                </li>
+                {B2B_CATEGORIES.map((cat) => (
                   <li key={cat}>
                     <Link className={styles.link} href={`/catalog?category=${cat}`}>
                       {tc(cat)}
@@ -204,6 +264,20 @@ export default function Footer({
             <ul className={styles.links}>
               <li><a className={styles.link} href="/delivery">{t('delivery')}</a></li>
               <li><a className={styles.link} href="/guarantee">{t('freshGuarantee')}</a></li>
+              <li><a className={styles.link} href="/returns">{t('returns')}</a></li>
+              <li><a className={styles.link} href="/privacy">{t('privacy')}</a></li>
+            </ul>
+          ) : isShoeMarket ? (
+            <ul className={styles.links}>
+              <li><a className={styles.link} href="/delivery">{t('delivery')}</a></li>
+              <li><a className={styles.link} href="/size-guide">{t('sizeGuide')}</a></li>
+              <li><a className={styles.link} href="/returns">{t('returns')}</a></li>
+              <li><a className={styles.link} href="/privacy">{t('privacy')}</a></li>
+            </ul>
+          ) : isB2B ? (
+            <ul className={styles.links}>
+              <li><a className={styles.link} href="/delivery">{t('delivery')}</a></li>
+              <li><a className={styles.link} href="/wholesale">{t('wholesale')}</a></li>
               <li><a className={styles.link} href="/returns">{t('returns')}</a></li>
               <li><a className={styles.link} href="/privacy">{t('privacy')}</a></li>
             </ul>
@@ -249,7 +323,11 @@ export default function Footer({
             {!isRestaurant && !isFoodMarket && !presence.hasPhysicalLocation && (
               <li className={styles.contactItem}>
                 <TruckIcon />
-                {t('deliveryNova')}
+                {isShoeMarket
+                  ? t('deliveryEU')
+                  : isB2B
+                    ? t('deliveryB2B')
+                    : t('deliveryNova')}
               </li>
             )}
           </ul>

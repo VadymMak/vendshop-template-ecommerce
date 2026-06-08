@@ -59,7 +59,13 @@
     "dress-shoes": "Eleganckie",
     "sport": "Sportowe",
     "kids": "Dziecięce",
-    "sale": "Wyprzedaż"
+    "sale": "Wyprzedaż",
+    "industrial": "Przemysł",
+    "office": "Artykuły biurowe",
+    "electronics": "Elektronika",
+    "raw-materials": "Surowce",
+    "packaging": "Opakowania",
+    "services": "Usługi"
   },
   "product": {
     "addToCart": "Dodaj do koszyka",
@@ -159,7 +165,13 @@
     "termsLink": "Regulamin",
     "aboutDescFood": "Świeże produkty, lokalne wyroby i artykuły codziennego użytku dostarczane do Twoich drzwi lub gotowe do odbioru.",
     "freshGuarantee": "Gwarancja świeżości",
-    "openingHours": "Godziny otwarcia"
+    "openingHours": "Godziny otwarcia",
+    "aboutDescShoe": "Sklep internetowy z premium obuwiem od wiodących światowych marek. Sneakersy, kozaki, buty eleganckie i więcej.",
+    "aboutDescB2B": "Platforma hurtowa dla potrzeb biznesowych, wyposażenia przemysłowego i profesjonalnych rozwiązań.",
+    "sizeGuide": "Tabela rozmiarów",
+    "wholesale": "Warunki hurtowe",
+    "deliveryEU": "Szybka wysyłka w całej UE",
+    "deliveryB2B": "Zamówienia hurtowe i indywidualna dostawa"
   },
   "tags": {
     "popularQueries": "Popularne wyszukiwania:"
