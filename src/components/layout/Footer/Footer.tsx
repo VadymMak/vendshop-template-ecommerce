@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useVerticalConfig } from '@/lib/vertical-context';
 import { useStorePresence } from '@/lib/presence-context';
 import type { Vertical } from '@prisma/client';
+import StoreLogo from '@/components/ui/StoreLogo';
 import styles from './Footer.module.css';
 
 export interface FooterProps {
@@ -128,9 +129,7 @@ export default function Footer({
         <div className={styles.brandCol}>
           <a className={styles.logo} href="/">
             <span className={styles.logoIcon} aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" {...strokeProps}>
-                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-              </svg>
+              <StoreLogo vertical={effectiveVertical} size={22} />
             </span>
             <span className={styles.logoText}>{storeName}</span>
           </a>

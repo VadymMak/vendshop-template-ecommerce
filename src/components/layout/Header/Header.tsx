@@ -7,6 +7,7 @@ import type { Vertical } from '@prisma/client';
 import CartBadge from './CartBadge';
 import { useFavoritesStore } from '@/stores/useFavoritesStore';
 import { useCompareStore } from '@/stores/useCompareStore';
+import StoreLogo from '@/components/ui/StoreLogo';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -249,18 +250,7 @@ export default function Header({
           {/* Logo */}
           <a className={styles.logo} href="/">
             <span className={styles.logoIcon} aria-hidden="true">
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-              </svg>
+              <StoreLogo vertical={vertical ?? 'ECOMMERCE'} size={22} />
             </span>
             <span className={styles.logoText}>{storeName}</span>
           </a>
