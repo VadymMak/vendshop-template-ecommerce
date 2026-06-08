@@ -445,5 +445,14 @@
     "yearsLabel": "Let Zkušeností",
     "dishesLabel": "Firmových Jídel",
     "guestsLabel": "Spokojených Hostů"
+  },
+  "promoBanner": {
+    "label": "LETNÍ KOLEKCE 2026",
+    "headline": "Slevy až 30%",
+    "brands": "Nike · Adidas · New Balance · ASICS a další",
+    "freeShipping": "Doprava zdarma od €75",
+    "freeReturns": "30 dní na vrácení",
+    "shopSale": "Zobrazit slevy",
+    "newArrivals": "Novinky"
   }
 }

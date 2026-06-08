@@ -445,5 +445,14 @@
     "yearsLabel": "Років Досвіду",
     "dishesLabel": "Фірмових Страв",
     "guestsLabel": "Задоволених Гостей"
+  },
+  "promoBanner": {
+    "label": "ЛІТНЯ КОЛЕКЦІЯ 2026",
+    "headline": "Знижки до 30%",
+    "brands": "Nike · Adidas · New Balance · ASICS та інші",
+    "freeShipping": "Безкоштовна доставка від €75",
+    "freeReturns": "30 днів на повернення",
+    "shopSale": "Перейти до знижок",
+    "newArrivals": "Новинки"
   }
 }

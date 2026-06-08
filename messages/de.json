@@ -445,5 +445,14 @@
     "yearsLabel": "Jahre Erfahrung",
     "dishesLabel": "Signature-Gerichte",
     "guestsLabel": "Zufriedene Gäste"
+  },
+  "promoBanner": {
+    "label": "SOMMERKOLLEKTION 2026",
+    "headline": "Bis zu 30% Rabatt",
+    "brands": "Nike · Adidas · New Balance · ASICS & mehr",
+    "freeShipping": "Gratis Versand ab €75",
+    "freeReturns": "30 Tage Rückgabe",
+    "shopSale": "Sale ansehen",
+    "newArrivals": "Neuheiten"
   }
 }

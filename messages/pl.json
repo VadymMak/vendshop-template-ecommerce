@@ -445,5 +445,14 @@
     "yearsLabel": "Lat doskonałości",
     "dishesLabel": "Dania sygnaturowe",
     "guestsLabel": "Zadowolonych gości"
+  },
+  "promoBanner": {
+    "label": "LETNIA KOLEKCJA 2026",
+    "headline": "Rabaty do 30%",
+    "brands": "Nike · Adidas · New Balance · ASICS i więcej",
+    "freeShipping": "Darmowa dostawa od €75",
+    "freeReturns": "30 dni na zwrot",
+    "shopSale": "Zobacz wyprzedaż",
+    "newArrivals": "Nowości"
   }
 }

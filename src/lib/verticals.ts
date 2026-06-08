@@ -65,6 +65,7 @@ export type PaymentMethod = 'card' | 'cod' | 'invoice' | 'liqpay' | 'wayforpay' 
 
 export type HomeSection =
   | 'hero'
+  | 'promo-banner'
   | 'categories'
   | 'bestsellers'
   | 'product-of-day'
@@ -257,7 +258,7 @@ export const VERTICAL_CONFIGS: Record<Vertical, VerticalConfig> = {
       paymentMethods: ['card', 'cod'],
     },
     ui: {
-      homeSections: ['hero', 'categories', 'bestsellers', 'product-of-day', 'new-arrivals', 'brands', 'how-it-works', 'trust-strip', 'subscribe'],
+      homeSections: ['promo-banner', 'categories', 'bestsellers', 'product-of-day', 'new-arrivals', 'brands', 'how-it-works', 'trust-strip', 'subscribe'],
       catalogStyle: 'grid',
       categoryDisplay: 'sidebar',
       addToCartLabel: 'Add to Cart',

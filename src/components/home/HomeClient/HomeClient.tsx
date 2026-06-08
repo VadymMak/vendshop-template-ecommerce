@@ -15,6 +15,7 @@ const GallerySection = dynamic(() => import('@/components/home/GallerySection/Ga
 const AboutSection = dynamic(() => import('@/components/home/AboutSection/AboutSection'));
 const BrandsSection = dynamic(() => import('@/components/home/BrandsSection/BrandsSection'));
 const TrustStrip = dynamic(() => import('@/components/home/TrustStrip/TrustStrip'));
+const PromoBanner = dynamic(() => import('@/components/home/PromoBanner'));
 const SubscribeBanner = dynamic(() => import('@/components/home/SubscribeBanner/SubscribeBanner'));
 const PopularTags = dynamic(() => import('@/components/home/PopularTags/PopularTags'));
 import { useVerticalConfig } from '@/lib/vertical-context';
@@ -76,6 +77,9 @@ export default function HomeClient({ products, productOfDay, storeName, menuCate
     <>
       {sections.map((section) => {
         switch (section) {
+          case 'promo-banner':
+            return <PromoBanner key={section} />;
+
           case 'categories':
             if (vConfig.vertical === 'FOOD_MARKET') {
               return (

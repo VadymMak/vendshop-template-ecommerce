@@ -445,5 +445,14 @@
     "yearsLabel": "Years of Excellence",
     "dishesLabel": "Signature Dishes",
     "guestsLabel": "Happy Guests"
+  },
+  "promoBanner": {
+    "label": "SUMMER COLLECTION 2026",
+    "headline": "Up to 30% Off",
+    "brands": "Nike · Adidas · New Balance · ASICS & more",
+    "freeShipping": "Free shipping €75+",
+    "freeReturns": "30-day returns",
+    "shopSale": "Shop Sale",
+    "newArrivals": "New Arrivals"
   }
 }
