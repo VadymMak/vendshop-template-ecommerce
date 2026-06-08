@@ -108,6 +108,24 @@ export default function CatalogPage({
     activeFilters.current.gender = initialGender;
   }, [initialGender]);
 
+  // ── Sync state when server props change (soft navigation Men→Women etc.) ──
+  useEffect(() => {
+    setProducts(initialProducts);
+  }, [initialProducts]);
+
+  useEffect(() => {
+    setTotal(initialTotal);
+    setTotalPages(initialTotalPages);
+  }, [initialTotal, initialTotalPages]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [initialGender, initialCategory, initialNewFilter, initialSaleFilter]);
+
+  useEffect(() => {
+    setActiveCategory(initialCategory);
+  }, [initialCategory]);
+
   const fetchProducts = useCallback(async (p: number, s: SortKey, filters: FilterState) => {
     setLoading(true);
     try {
